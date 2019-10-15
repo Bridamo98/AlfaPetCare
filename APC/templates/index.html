@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load crispy_forms_tags %}
+{%load staticfiles%}
+<html lang="es">
+
+<head>
+  <!--mata datos requeridos-->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link href="{% static 'css/estilos.css'%}" rel="stylesheet">
+  <title>{% block titulo %}Inicio{% endblock titulo %}</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Este boton despliega la barra de navegación</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">AlfaPetCare</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Noticias <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Eventos</a></li>
+              <li><a href="#">Reportes</a></li>
+              <li><a href="#">De amigos</a></li>
+              <li><a href="#">Productos/Servicios</a></li>
+              <li><a href="#">Todos</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Conversaciones <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Mis conversaciones globales</a></li>
+              <li><a href="#">Conversación privada</a></li>
+              <li><a href="#">Conversación global</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Amigos <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Mis amigos</a></li>
+              <li><a href="#">Solicitudes de amistad</a></li>
+              <li><a href="#">Añadir amigo</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Eventos <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Mis eventos</a></li>
+              <li><a href="#">Eventos globales</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Productos/Servicios <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Añadir un P/S</a></li>
+              <li><a href="#">Calificar un P/S</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'mapa'%}">Mapa</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'logout'%}"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!--AQUI SE CARGA INFO DE PRESENTACIÓN DEL USUARIO (MU PERFIL) CON BOTÓN DE EDITAR-->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading text-center">
+            <h4>Mi perfil</h4>
+          </div>
+          <div class="panel-body">
+              <!--Aquí está quemada la info para este usuario-->
+              <img class="img-responsive center-block" src="https://i.pinimg.com/originals/07/21/62/072162c4ebe19bdcac271f6bad855d40.jpg" class="img-rounded" id="Panel_Image" width="150">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        {% block cuerpo %}
+        <!--Aquí está quemada la info para los eventos-->
+        <div class="panel panel-default">
+          <div class="panel-heading text-center">
+            <h4>Eventos</h4>
+          </div>
+          <div class="panel-body">
+
+
+
+          </div>
+      </div>
+      {% endblock cuerpo %}
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo " crossorigin="anonymous "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js " integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49 " crossorigin="anonymous "></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript ">
+    $('[data-toggle="tooltip "]').tooltip();
+  </script>
+</body>
+
+</html>

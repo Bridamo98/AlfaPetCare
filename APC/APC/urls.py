@@ -14,8 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from apps.gestor_de_usuarios.views import Home#para la clase requerida
+from django.contrib.auth.decorators import login_required
+from apps.gestor_de_usuarios.views import Login, Logout, Registro
+from apps.mapa.views import Mapa
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #path('prueba/', include(('apps.prueba.urls','prueba'))),#Enlazar una url de app con la del proyecto
+    path('',login_required(Home) ,name = 'index'),#(1)Texto para ejecutar codigo de clase (2), y (3) solo para template django
+    path('accounts/login/',Login.as_view(),name = 'login'),
+    path('logout/',login_required(Logout), name = 'logout'),
+    path('registro/',Registro, name = 'registro'),
+    path('mapa/',login_required(Mapa), name = 'mapa'),
 ]

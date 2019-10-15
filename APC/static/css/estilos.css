@@ -1,0 +1,19 @@
+body {
+  background-image: url('../pattern.png');
+}
+.jumbotron{
+  background-color: #343940;
+  color: white;
+}
+.panel-heading{
+  background-color: #343940 ;
+  color: white ;
+}
+.panel-body{
+  background-color: #c1c9d4 ;
+  color: #2b2b2b;
+  word-break:break-all;
+}
+.navbar-brand{
+  background-color: black;
+}
