@@ -25,7 +25,7 @@ SECRET_KEY = 'b!l(yg7mjou@bred8v%fn=j4rkzk$*et7pys1i6g%+1%@!w+6='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['alfapetcare.pythonanywhere.com']
 
 
 # Application definition
@@ -60,7 +60,7 @@ ROOT_URLCONF = 'APC.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
