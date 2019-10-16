@@ -65,7 +65,13 @@
               <li><a href="#">Calificar un P/S</a></li>
             </ul>
           </li>
-          <li><a href="{% url 'mapa'%}">Mapa</a></li>
+
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Mapa <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Agregar lugar</a></li>
+              <li><a href="{% url 'mapa' %}">Lugares cercanos</a></li>
+            </ul>
+          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{% url 'logout'%}"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
