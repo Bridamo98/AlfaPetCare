@@ -1,16 +1,8 @@
 {% extends 'index.html' %}
 {% block cabecera %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHWD7FWauZoIEpRqhy2-KbZ3NS5XcsGdc&callback=initMap"
-  type="text/javascript"></script>
-  <style type="text/css">
+<script type="text/javascript">
 
-    #map {
-        width: 500px;
-        height: 500px;
-     }
-  </style>
-
-  <script type="text/javascript">
+      function initMap(){
 
       x = navigator.geolocation;
 
@@ -39,14 +31,24 @@
 
       function failure(){ }
 
+      }
+
   </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHWD7FWauZoIEpRqhy2-KbZ3NS5XcsGdc&callback=initMap"
+  type="text/javascript"></script>
+  <style type="text/css">
+
+  	#map {
+  			width: 400px;
+  			height: 400px;
+  	 }
+  </style>
+
 {% endblock cabecera %}
 {% block titulo %}
 Mapa
-{% endblock %}
+{% endblock titulo%}
 {% block cuerpo %}
-
-
 <div class="panel panel-default">
   <div class="panel-heading text-center">
     <h4>Mapa</h4>
