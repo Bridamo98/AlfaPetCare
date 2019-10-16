@@ -36,14 +36,6 @@
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHWD7FWauZoIEpRqhy2-KbZ3NS5XcsGdc&callback=initMap"
   type="text/javascript"></script>
-  <style type="text/css">
-
-  	#map {
-  			width: 400px;
-  			height: 400px;
-  	 }
-  </style>
-
 {% endblock cabecera %}
 {% block titulo %}
 Mapa
@@ -54,7 +46,7 @@ Mapa
     <h4>Mapa</h4>
   </div>
   <div class="panel-body">
-    <div id="map"></div>
+    <div id="map" style="width: 500px; height: 500px;"></div>
   </div>
 </div>
 {% endblock cuerpo %}
