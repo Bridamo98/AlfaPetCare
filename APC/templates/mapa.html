@@ -1,8 +1,5 @@
 {% extends 'index.html' %}
-{% block titulo %}
-Mapa
-{% endblock %}
-{% block cuerpo %}
+{% block cabecera %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHWD7FWauZoIEpRqhy2-KbZ3NS5XcsGdc&callback=initMap"
   type="text/javascript"></script>
   <style type="text/css">
@@ -43,6 +40,12 @@ Mapa
       function failure(){ }
 
   </script>
+{% endblock cabecera %}
+{% block titulo %}
+Mapa
+{% endblock %}
+{% block cuerpo %}
+
 
 <div class="panel panel-default">
   <div class="panel-heading text-center">
