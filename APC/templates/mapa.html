@@ -1,171 +1,213 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Google Maps JavaScript API</title>
-	<link href="{% static 'css/estilos.css'%}" rel="stylesheet">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-</head>
-<body>
-<label for="">Address: <input id="map-search" class="controls" type="text" placeholder="Search Box" size="104"></label><br>
-<label for="">Lat: <input type="text" class="latitude"></label>
-<label for="">Long: <input type="text" class="longitude"></label>
-<div id="map-canvas"></div>
-<script>
-	function initialize() {
+{% extends 'index.html'%}
+{% block cabecera %}
+<style>
+  html,
+  body,
+  #map-canvas {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
-	var mapOptions, map, marker, searchBox, city,
-		infoWindow = '',
-		addressEl = document.querySelector( '#map-search' ),
-		latEl = document.querySelector( '.latitude' ),
-		longEl = document.querySelector( '.longitude' ),
-		element = document.getElementById( 'map-canvas' );
-	city = document.querySelector( '.reg-input-city' );//---------
+  #map-canvas {
+    height: 75%;
+    width: 75%;
+  }
+</style>
+{% endblock cabecera %}
+{% block titulo %}Mapa{% endblock titulo %}
+{% block cuerpo %}
+<div class="panel panel-default">
+  <div class="panel-heading text-center">
+    <h4>Mapa</h4>
+  </div>
+  <div class="panel-body">
+    <div class="input-group input-group-sm mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Ingresa tu dirección</span>
+      </div>
+      <input id="map-search" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      <select class="browser-default custom-select" id="radio">
+        <option disabled selected>Seleccione la distancia</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+        <option value="5000">5000</option>
+      </select>
+      <select class="browser-default custom-select" id="lugar">
+        <option disabled selected>Selecciona el lugar</option>
+        <option value="Clinica Veterinaria">Clínica veterinaria</option>
+        <option value="Parque">Parque</option>
+        <option value="Comida mascotas">Camida para mascotas</option>
+        <option value="Veterinario">Veterinario</option>
+        <option value="Petfriendly">Lugares PetFriendly</option>
+      </select>
+    </div>
+    <button onclick="actualizarMapa()">actualizar</button>
+    <div id="map-canvas"></div>
+    <script>
+      var map, infoWindow = '',
+        marker, service;
+      var markersArray = [];
 
-	mapOptions = {
-		// How far the maps zooms in.
-		zoom: 8,
-		// Current Lat and Long position of the pin/
-		center: new google.maps.LatLng( 18.5204, 73.8567 ),//---- PONER BOGOTÁ
-		// center : {
-		// 	lat: -34.397,
-		// 	lng: 150.644
-		// },
-		disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
-		scrollWheel: true, // If set to false disables the scrolling on the map.
-		draggable: true, // If set to false , you cannot move the map around.
-		// mapTypeId: google.maps.MapTypeId.HYBRID, // If set to HYBRID its between sat and ROADMAP, Can be set to SATELLITE as well.
-		// maxZoom: 11, // Wont allow you to zoom more than this
-		// minZoom: 9  // Wont allow you to go more up.
+      function clearOverlays() {
+        for (var i = 0; i < markersArray.length; i++) {
+          markersArray[i].setMap(null);
+        }
+        markersArray.length = 0;
+      }
 
-	};
+      function createMarker(place) {
+        var marker2 = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
 
-	/**
-	 * Creates the map using google function google.maps.Map() by passing the id of canvas and
-	 * mapOptions object that we just created above as its parameters.
-	 *
-	 */
-	// Create an object map with the constructor function Map()
-	map = new google.maps.Map( element, mapOptions ); // Till this like of code it loads up the map.
+        markersArray.push(marker2);
+        google.maps.event.addListener(marker2, 'click', function() {
+          infoWindow.setContent(place.name);
+          infoWindow.open(map, this);
+        });
+      }
 
-	/**
-	 * Creates the marker on the map
-	 *
-	 */
-	marker = new google.maps.Marker({
-		position: mapOptions.center,
-		map: map,
-		// icon: 'http://pngimages.net/sites/default/files/google-maps-png-image-70164.png',
-		draggable: true
-	});
+      function actualizarMapa() {
+        clearOverlays();
+        var e = document.getElementById("lugar");
+        var lugar = e.options[e.selectedIndex].value;
+        e = document.getElementById("radio");
+        var radio = parseInt(e.options[e.selectedIndex].value);
 
-	/**
-	 * Creates a search box
-	 */
-	searchBox = new google.maps.places.SearchBox( addressEl );
+        var request = {
+          location: marker.getPosition(),
+          radius: radio,
+          keyword: lugar
+        };
 
-	/**
-	 * When the place is changed on search box, it takes the marker to the searched location.
-	 */
-	google.maps.event.addListener( searchBox, 'places_changed', function () {
-		var places = searchBox.getPlaces(),
-			bounds = new google.maps.LatLngBounds(),
-			i, place, lat, long, resultArray,
-			addresss = places[0].formatted_address;
+        console.log(radio);
+        console.log(lugar);
+        service = new google.maps.places.PlacesService(map);
 
-		for( i = 0; place = places[i]; i++ ) {
-			bounds.extend( place.geometry.location );
-			marker.setPosition( place.geometry.location );  // Set marker position new.
-		}
+        service.nearbySearch(request, function(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              console.log(results[i]);
+              createMarker(results[i]);
+            }
 
-		map.fitBounds( bounds );  // Fit to the bound
-		map.setZoom( 15 ); // This function sets the zoom to 15, meaning zooms to level 15.
-		// console.log( map.getZoom() );
+            //map.setCenter(results[0].geometry.location);
+          }
+        });
+      }
 
-		lat = marker.getPosition().lat();
-		long = marker.getPosition().lng();
-		latEl.value = lat;
-		longEl.value = long;
+      function initialize() {
 
-		resultArray =  places[0].address_components;
+        var mapOptions, searchBox,
 
-		// Get the city and set the city input value to the one selected
-		for( var i = 0; i < resultArray.length; i++ ) {
-			if ( resultArray[ i ].types[0] && 'administrative_area_level_2' === resultArray[ i ].types[0] ) {
-				citi = resultArray[ i ].long_name;
-				city.value = citi;
-			}
-		}
+          addressEl = document.querySelector('#map-search'),
 
-		// Closes the previous info window if it already exists
-		if ( infoWindow ) {
-			infoWindow.close();
-		}
-		/**
-		 * Creates the info Window at the top of the marker
-		 */
-		infoWindow = new google.maps.InfoWindow({
-			content: addresss
-		});
-
-		infoWindow.open( map, marker );
-	} );
+          element = document.getElementById('map-canvas');
 
 
-	/**
-	 * Finds the new position of the marker when the marker is dragged.
-	 */
-	google.maps.event.addListener( marker, "dragend", function ( event ) {
-		var lat, long, address, resultArray, citi;
+        mapOptions = {
+          // How far the maps zooms in.
+          zoom: 8,
+          // Current Lat and Long position of the pin/
+          center: new google.maps.LatLng(18.5204, 73.8567), //---- PONER BOGOTÁ
+          // center : {
+          // 	lat: -34.397,
+          // 	lng: 150.644
+          // },
+          disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
+          scrollWheel: true, // If set to false disables the scrolling on the map.
+          draggable: true, // If set to false , you cannot move the map around.
+          // mapTypeId: google.maps.MapTypeId.HYBRID, // If set to HYBRID its between sat and ROADMAP, Can be set to SATELLITE as well.
+          // maxZoom: 11, // Wont allow you to zoom more than this
+          // minZoom: 9  // Wont allow you to go more up.
 
-		console.log( 'i am dragged' );
-		lat = marker.getPosition().lat();
-		long = marker.getPosition().lng();
+        };
 
-		var geocoder = new google.maps.Geocoder();
-		geocoder.geocode( { latLng: marker.getPosition() }, function ( result, status ) {
-			if ( 'OK' === status ) {  // This line can also be written like if ( status == google.maps.GeocoderStatus.OK ) {
-				address = result[0].formatted_address;
-				resultArray =  result[0].address_components;
+        /**
+         * Creates the map using google function google.maps.Map() by passing the id of canvas and
+         * mapOptions object that we just created above as its parameters.
+         *
+         */
+        // Create an object map with the constructor function Map()
+        map = new google.maps.Map(element, mapOptions); // Till this like of code it loads up the map.
 
-				// Get the city and set the city input value to the one selected
-				for( var i = 0; i < resultArray.length; i++ ) {
-					if ( resultArray[ i ].types[0] && 'administrative_area_level_2' === resultArray[ i ].types[0] ) {
-						citi = resultArray[ i ].long_name;
-						console.log( citi );
-						city.value = citi;
-					}
-				}
-				addressEl.value = address;
-				latEl.value = lat;
-				longEl.value = long;
+        /**
+         * Creates the marker on the map
+         *
+         */
+        marker = new google.maps.Marker({
+          position: mapOptions.center,
+          map: map,
+          //icon: 'http://pngimages.net/sites/default/files/google-maps-png-image-70164.png',
+          //draggable: true
+        });
 
-			} else {
-				console.log( 'Geocode was not successful for the following reason: ' + status );
-			}
+        /**
+         * Creates a search box
+         */
+        searchBox = new google.maps.places.SearchBox(addressEl);
 
-			// Closes the previous info window if it already exists
-			if ( infoWindow ) {
-				infoWindow.close();
-			}
-
-			/**
-			 * Creates the info Window at the top of the marker
-			 */
-			infoWindow = new google.maps.InfoWindow({
-				content: address
-			});
-
-			infoWindow.open( map, marker );
-		} );
-	});
+        /**
+         * When the place is changed on search box, it takes the marker to the searched location.
+         */
 
 
-}
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHWD7FWauZoIEpRqhy2-KbZ3NS5XcsGdc&libraries=places&callback=initialize"></script>
-</body>
-</html>
+        google.maps.event.addListener(map, 'idle', function() {
+
+
+        });
+        google.maps.event.addListener(searchBox, 'places_changed', function() {
+          var places = searchBox.getPlaces(),
+            bounds = new google.maps.LatLngBounds(),
+            i, place, lat, long, resultArray,
+            addresss = places[0].formatted_address;
+
+          for (i = 0; place = places[i]; i++) {
+            bounds.extend(place.geometry.location);
+            console.log(place);
+            marker.setPosition(place.geometry.location); // Set marker position new.
+          }
+
+          map.fitBounds(bounds); // Fit to the bound
+          map.setZoom(15); // This function sets the zoom to 15, meaning zooms to level 15.
+          // console.log( map.getZoom() );
+
+          lat = marker.getPosition().lat();
+          long = marker.getPosition().lng();
+
+          resultArray = places[0].address_components;
+
+          // Get the city and set the city input value to the one selected
+          for (var i = 0; i < resultArray.length; i++) {
+            if (resultArray[i].types[0] && 'administrative_area_level_2' === resultArray[i].types[0]) {
+              citi = resultArray[i].long_name;
+            }
+          }
+
+          // Closes the previous info window if it already exists
+
+          /**
+           * Creates the info Window at the top of the marker
+           */
+          infoWindow = new google.maps.InfoWindow({
+            content: addresss
+          });
+
+          infoWindow.open(map, marker);
+
+        });
+
+
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHWD7FWauZoIEpRqhy2-KbZ3NS5XcsGdc&libraries=places&callback=initialize"></script>
+
+
+  </div>
+</div>
+{% endblock cuerpo %}
