@@ -17,14 +17,3 @@ body {
 .navbar-brand{
   background-color: black;
 }
-
-html, body, #map-canvas {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-}
-
-#map-canvas {
-	height: 75%;
-	width: 75%;
-}
