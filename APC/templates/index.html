@@ -13,23 +13,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
   <link href="{% static 'css/estilos.css'%}" rel="stylesheet">
-  <style>
-    /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-       .map-container{
-     overflow:hidden;
-     padding-bottom:56.25%;
-     position:relative;
-     height:0;
-     }
-     .map-container iframe{
-     left:0;
-     top:0;
-     height:100%;
-     width:100%;
-     position:absolute;
-     }
-  </style>
+  {% block encabezado %}
+  {% endblock encabezado %}
   <title>{% block titulo %}Inicio{% endblock titulo %}</title>
 </head>
 
@@ -43,7 +28,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">{{ user.username}}</a>
+        <a class="navbar-brand" href="#">AlfaPetCare</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
@@ -102,7 +87,7 @@
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading text-center">
-            <h4>Mi perfil</h4>
+            <h4>{{profile.user.username}}</h4>
           </div>
           <div class="panel-body">
             <!--Aquí está quemada la info para este usuario-->
@@ -127,8 +112,6 @@
         {% endblock cuerpo %}
       </div>
     </div>
-    {% block final%}
-    {% endblock final%}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo " crossorigin="anonymous "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js " integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49 " crossorigin="anonymous "></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

@@ -10,11 +10,15 @@ from .forms import FormularioLogin
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+
+from .forms import RegistroForm, infoForm
+from .models import Profile
 """
 Renderiza el template index o página de inicio
 """
 def Home(request):
-    return render(request,'index.html')#HTTP request
+    profile = Profile.objects.get(user = request.user)
+    return render(request,'index.html',{'profile':profile,})#HTTP request
 #end def
 """
 Valida el login de un usuario
@@ -53,11 +57,17 @@ Valida y renderiza el registro de un usuario
 """
 def Registro(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        user_form = RegistroForm(request.POST)
+        info_form = infoForm(request.POST)
+        if user_form.is_valid() and info_form.is_valid():
+            user=user_form.save(commit=False)
+            profile=info_form.save(commit=False)
+            user.save()
+            profile.user=user
+            profile.save()
             return redirect('login')
     else:
-        form = UserCreationForm()
-    return render(request,'registro.html',{'form':form})
+        user_form= RegistroForm()
+        info_form=infoForm()
+    return render(request,'registro.html',{'user_form':user_form,'info_form':info_form})
 #end def

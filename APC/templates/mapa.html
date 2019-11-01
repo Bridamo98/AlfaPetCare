@@ -1,20 +1,40 @@
 {% extends 'index.html'%}
+{% block encabezado%}
+<style>
+  /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+     .map-container{
+   overflow:hidden;
+   padding-bottom:56.25%;
+   position:relative;
+   height:0;
+   }
+   .map-container iframe{
+   left:0;
+   top:0;
+   height:100%;
+   width:100%;
+   position:absolute;
+   }
+</style>
+{% endblock encabezado%}
+
 {% block titulo %}Mapa{% endblock titulo %}
 {% block cuerpo %}
 <div class="panel panel-default">
   <div class="panel-heading">
     <h4>Mapa</h4>
   </div>
-  <div class="panel-body ">
-    <div class="input-group input-group-sm mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-sm">
-          <h3>Ingresa tu dirección</h3>
-        </span>
-      </div>
-      <input id="map-search" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+  <div class="panel-body" style="text-align: center">
 
-    </div>
+
+        <span class="input-group-text" id="inputGroup-sizing-sm">
+          <h3>En que lugar te encuentras?</h3>
+        </span>
+
+      <input id="map-search" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Escribe el lugar">
+
+      <br>
     <select class="browser-default custom-select" id="radio">
       <option disabled selected>Seleccione la distancia(metros)</option>
       <option value="20">20</option>
@@ -24,6 +44,9 @@
       <option value="1000">1000</option>
       <option value="5000">5000</option>
     </select>
+    <br>
+    <br>
+
     <select class="browser-default custom-select" id="lugar">
       <option disabled selected>Selecciona el lugar</option>
       <option value="clinica veterinaria">Clínicas veterinarias</option>
@@ -37,7 +60,8 @@
       <option value="spa mascotas">Spa para mascotas</option>
     </select>
     <br>
-    <button onclick="actualizarMapa()">actualizar</button>
+    <br>
+    <button type="button" class="btn btn-secondary" onclick="actualizarMapa()">actualizar</button>
     <script>
       var map, infoWindow = '',
         marker, service;
@@ -139,5 +163,3 @@
 <div id="map-canvas" class="z-depth-1-half map-container mb-5" style="height: 400px"></div>
 
 {% endblock cuerpo %}
-{% block final%}
-{% endblock final%}
