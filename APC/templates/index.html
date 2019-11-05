@@ -87,12 +87,21 @@
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading text-center">
-            <h4>{{profile.user.username}}</h4>
+            <h4>{{profile.user.first_name}}</h4>
           </div>
           <div class="panel-body">
             <!--Aquí está quemada la info para este usuario-->
             <img class="img-responsive center-block" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" class="img-rounded" id="Panel_Image" width="150">
+            <h5><b>Nombre:</b> {{profile.user.first_name}}</h5>
+            <h5><b>Apellidos:</b> {{profile.user.last_name}}</h5>
+            <h5><b>Nombre de usuario:</b> {{profile.user.username}}</h5>
+            <h5><b>Email:</b> {{profile.user.email}}</h5>
+            <h5><b>Telefono:</b> {{profile.tfno}}</h5>
+
+
+
           </div>
+
         </div>
       </div>
 
@@ -118,6 +127,7 @@
     <script type="text/javascript ">
       $('[data-toggle="tooltip "]').tooltip();
     </script>
+  </div>
 </body>
 
 </html>
