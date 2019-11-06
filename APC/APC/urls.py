@@ -28,4 +28,5 @@ urlpatterns = [
     path('logout/',login_required(Logout), name = 'logout'),
     path('registro/',Registro, name = 'registro'),
     path('mapa/',login_required(Mapa), name = 'mapa'),
+    path('mascota/',include(('apps.gestor_de_mascotas.urls','mascota'))),
 ]

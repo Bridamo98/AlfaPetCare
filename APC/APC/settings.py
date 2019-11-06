@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'apps.prueba',
     'apps.gestor_de_usuarios',
+    'apps.gestor_de_mascotas',
     'apps.mapa',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
