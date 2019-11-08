@@ -13,7 +13,9 @@ class registro_mascota_form(forms.ModelForm):
         'tipo',
         'fecha_nacimiento',
         'sexo',
-        #'enfermedades',
+        'raza',
+        'enfermedades',
+
  		 ]
 
  		labels={
@@ -21,9 +23,11 @@ class registro_mascota_form(forms.ModelForm):
         'tipo':'Escoja el tipo de mascota',
         'fecha_nacimiento':'Digite la fecha de nacimiento',
         'sexo':'Escoja el sexo de la mascota',
-        #'enfermedades':'Escoja las enfermedades de la mascota',
+        'raza':'Escoja la raza de la mascota',
+        'enfermedades':'Escoja las enfermedades de la mascota',
  		}
  		widgets = {
             'fecha_nacimiento': DateInput(),
+            'enfermedades': forms.CheckboxSelectMultiple(),
         }
     #end class

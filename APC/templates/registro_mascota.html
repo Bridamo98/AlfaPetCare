@@ -16,8 +16,47 @@
       <button type="reset" class="btn btn-default">Limpiar</button>
       <button type="submit" class="btn btn-default" name="send">Registrar mascota</button>
     </form>
+
+    <script>
+      window.onload=function(){
+        var razas_perro = ["Weimaraner","Viejo Pastor Inglés","Terrier Yorkshire","Terrier Escocés","Terranova",
+        "Springer Spaniel","Shih Tzu","Shiba Inu","Shar Pei","Schnauzer Miniatura","San Bernardo","Rottweiler",
+        "Pug","Poodle","Pomeranio","Pitbull terrier","Pinscher","Corgi","Pekinés","Pastor de Shetland","Pastor Australiano",
+        "Pastor Alemán","Malamute de Alaska","Labrador Retriever","Husky Siberiano","Gran Danés","Golden Retriever",
+        "Galgo","Flat Coated Retriever","Doberman","Dálmata","Dachshund","Collie","Cocker Spaniel","Chow Chow","Chihuahua",
+        "Bulldog francés","Bulldog","Bóxer","Boston Terrier","Border Collie","Basset Hound","Akita americano","Criollo"];
+
+        var razas_gato = ["Curl Americano","Búrmes","Munchkin","Devon Rex","Oriental","Scottish Fold","Van Turco",
+        "Korat","Somalí","Sphynx","Siberiano","Exótico","Birmano","Bosque de Noruega","Bengalí","Abisinio","Balinés",
+        "Maine Coon","British Shorthair","Ruso Azul","Bombay","Persa","Siamés","Ragdoll","Criollo"];
+
+      	var tipo_mascota = document.getElementById("id_tipo")
+        var razas = document.getElementById("id_raza")
+        razas.options.length = 1;
+
+        tipo_mascota.addEventListener("change",function(){
+          var razas2 = document.getElementById("id_raza")
+          razas2.options.length = 1;
+
+          if (tipo_mascota.value == "Perro"){
+            agregar_razas(razas, razas_perro);
+          }
+          else if (tipo_mascota.value == "Gato"){
+            agregar_razas(razas, razas_gato);
+          }
+      	});
+      };
+
+      function agregar_razas(elemento, valores){
+        for (i = 0; i < valores.length; i++){
+          var raza = valores[i]
+          var option = document.createElement("option");
+          option.text = raza;
+          elemento.add(option)
+        }
+      };
+
+    </script>
   </div>
 </div>
-
-
 {% endblock cuerpo %}
