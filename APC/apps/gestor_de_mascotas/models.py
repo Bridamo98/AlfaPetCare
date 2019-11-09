@@ -8,6 +8,9 @@ class Enfermedad(models.Model):
     def __str__(self): #To string
         return self.nombre
 
+class Color(models.Model):
+    nombre = models.CharField(max_length = 30, blank = False, null = False)
+
 class Mascota(models.Model):
     TIPOS = (
         ('Perro', 'Perro'),
@@ -96,6 +99,7 @@ class Mascota(models.Model):
     fecha_nacimiento = models.DateField('Fecha nacimiento', blank = False, null = False)
     sexo = models.CharField(max_length = 7, blank = False, null = False, choices = SEXO)
     raza = models.CharField(max_length = 30, blank = False, null = False, choices = RAZAS, default = None)
+    color = models.ManyToManyField(Color, blank=True)
     enfermedades = models.ManyToManyField(Enfermedad, blank=True)
     #color = models.CharField(max_length = 20, blank = False, null = False)
     #peso = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1),MaxValueValidator(100)])

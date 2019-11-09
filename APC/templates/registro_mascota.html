@@ -32,9 +32,14 @@
 
       	var tipo_mascota = document.getElementById("id_tipo")
         var razas = document.getElementById("id_raza")
+        var enfermedades = document.getElementById("id_enfermedades")
         razas.options.length = 1;
+        //enfermedades.disabled = false;
+
+
 
         tipo_mascota.addEventListener("change",function(){
+          //document.write(enfermedades[0])
           var razas2 = document.getElementById("id_raza")
           razas2.options.length = 1;
 
@@ -44,6 +49,15 @@
           else if (tipo_mascota.value == "Gato"){
             agregar_razas(razas, razas_gato);
           }
+
+          /*for (var i=0, n=checkboxes.length;i<n;i++)
+          {
+              if (checkboxes[i].checked)
+              {
+                  vals += ","+checkboxes[i].value;
+              }
+          }
+          if (vals) vals = vals.substring(1);*/
       	});
       };
 

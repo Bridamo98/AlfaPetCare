@@ -16,6 +16,7 @@ def registro_mascota(request):
             mascota=mascota_form.save(commit=False)
             mascota.usuario = profile
             mascota.save()
+            mascota_form.save_m2m()
             return redirect('index')
     else:
         mascota_form = registro_mascota_form()
