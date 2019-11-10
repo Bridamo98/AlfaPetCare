@@ -1,0 +1,19 @@
+{% extends 'index.html'%}
+{% load crispy_forms_tags %}
+{% block encabezado%}
+{% endblock encabezado%}
+
+{% block titulo %}Tópicos{% endblock titulo %}
+{% block cuerpo %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Mis Tópicos</h4>
+  </div>
+  <div class="panel-body">
+    {% for topico in profile.topicos.all %}
+        <li>{{ topico }}</li>
+    {% endfor %}
+    <a href="{%url 'agregar_topicos'%}" class="text-center">Agregar Tópicos</a>
+  </div>
+</div>
+{% endblock cuerpo %}

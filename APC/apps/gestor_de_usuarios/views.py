@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login, logout
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-from .forms import FormularioLogin
+from .forms import FormularioLogin, agregar_topicos_form
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -70,4 +70,21 @@ def Registro(request):
         user_form= RegistroForm()
         info_form=infoForm()
     return render(request,'registro.html',{'user_form':user_form,'info_form':info_form})
+#end def
+
+def Topicos(request):
+    profile = Profile.objects.get(user = request.user)
+    return render(request,'topicos.html',{'profile':profile,})#HTTP request
+#end def
+
+def Agregar_topicos(request):
+    profile = Profile.objects.get(user = request.user)
+    if request.method == "POST":
+        a_topicos_form = agregar_topicos_form(request.POST, instance = profile)
+        if a_topicos_form.is_valid():
+            a_topicos_form.save()
+            return redirect('index')
+    else:
+        a_topicos_form = agregar_topicos_form()
+    return render(request,'agregar_topicos.html',{'agregar_topicos_form':agregar_topicos_form,'profile':profile,})#HTTP request
 #end def

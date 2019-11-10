@@ -41,3 +41,18 @@ class infoForm(forms.ModelForm):
  		widgets={
 
  		}
+
+class agregar_topicos_form(forms.ModelForm):
+ 	class Meta:
+ 		model=Profile
+ 		fields=[
+ 		'topicos',
+ 		 ]
+
+ 		labels={
+        'topicos':'Escoja los tópicos que quiera agregar',
+ 		}
+ 		widgets = {
+            'topicos': forms.CheckboxSelectMultiple(),
+        }
+    #end class
