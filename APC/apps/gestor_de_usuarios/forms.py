@@ -20,7 +20,7 @@ class RegistroForm(UserCreationForm):
 		'first_name',
 		'last_name',
 		'email',
-		]
+        ]
 		labels={
 		'username':'Nombre de Usuario',
 		'first_name':'Nombres',
@@ -43,6 +43,7 @@ class infoForm(forms.ModelForm):
  		}
 
 class editar_perfil_form(UserChangeForm):
+    password = None
     class Meta:
         model = User
         fields = [
@@ -59,6 +60,7 @@ class editar_perfil_form(UserChangeForm):
 		}
 
 class editar_informacion_form(UserChangeForm):
+    password = None
     class Meta:
         model = Profile
         fields = [

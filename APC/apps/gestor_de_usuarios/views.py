@@ -77,13 +77,16 @@ def Editar_perfil(request):
     if request.method == "POST":
         edit_user_form = editar_perfil_form(request.POST, instance = request.user)
         edit_info_form = editar_informacion_form(request.POST, instance = profile)
+        #edit_password_form = PasswordChangeForm(data = request.POST, user = request.user)
         if edit_user_form.is_valid() and edit_info_form.is_valid():
             edit_user_form.save()
             edit_info_form.save()
+            #edit_password_form.save()
             return redirect('index')
     else:
         edit_user_form = editar_perfil_form(instance = request.user)
         edit_info_form = editar_informacion_form(instance = profile)
+        #edit_password_form = PasswordChangeForm(user = request.user)
     return render(request,'editar_perfil.html',{'edit_user_form':edit_user_form,'edit_info_form':edit_info_form,'profile':profile,})#HTTP request
 
 def Cambiar_password(request):
@@ -93,7 +96,7 @@ def Cambiar_password(request):
         if edit_password_form.is_valid():
             edit_password_form.save()
             update_session_auth_hash(request, edit_password_form.user)
-            return redirect('index')
+            return redirect('editar_perfil')
         else:
             return redirect ('cambiar_password')
     else:
