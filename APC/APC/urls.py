@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from apps.gestor_de_usuarios.views import Home#para la clase requerida
 from django.contrib.auth.decorators import login_required
-from apps.gestor_de_usuarios.views import Login, Logout, Registro, Topicos, Agregar_topicos
+from apps.gestor_de_usuarios.views import Login, Logout, Registro, Topicos, Agregar_topicos, Editar_perfil, Cambiar_password
 from apps.mapa.views import Mapa
 
 urlpatterns = [
@@ -30,5 +30,7 @@ urlpatterns = [
     path('mapa/',login_required(Mapa), name = 'mapa'),
     path('mascota/',include(('apps.gestor_de_mascotas.urls','mascota'))),
     path('topicos/',login_required(Topicos), name = 'topicos'),
-    path('topicos/agregar_topicos',login_required(Agregar_topicos), name = 'agregar_topicos'),
+    path('topicos/agregar_topicos/',login_required(Agregar_topicos), name = 'agregar_topicos'),
+    path('editar_perfil/',login_required(Editar_perfil), name = 'editar_perfil'),
+    path('editar_perfil/cambiar_contraseña/',login_required(Cambiar_password), name = 'cambiar_password'),
 ]

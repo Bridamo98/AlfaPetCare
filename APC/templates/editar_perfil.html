@@ -1,0 +1,22 @@
+{% extends 'index.html'%}
+{% load crispy_forms_tags %}
+{% block encabezado%}
+{% endblock encabezado%}
+
+{% block titulo %}Editar Perfil{% endblock titulo %}
+{% block cuerpo %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Editar Perfil</h4>
+  </div>
+  <div class="panel-body">
+    <form role="form" method="post">
+      {% csrf_token %}
+      {{edit_user_form|crispy}}
+      {{edit_info_form|crispy}}
+      <button type="reset" class="btn btn-default">Limpiar</button>
+      <button type="submit" class="btn btn-default" name="send">Comfirmar</button>
+    </form>
+  </div>
+</div>
+{% endblock cuerpo %}
