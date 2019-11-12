@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 
 from .models import Profile
@@ -41,6 +41,33 @@ class infoForm(forms.ModelForm):
  		widgets={
 
  		}
+
+class editar_perfil_form(UserChangeForm):
+    class Meta:
+        model = User
+        fields = [
+        'username',
+        'first_name',
+        'last_name',
+        'email',
+        ]
+        labels={
+		'username':'Nombre de Usuario',
+		'first_name':'Nombres',
+		'last_name': 'Apellidos',
+		'email':'Correo electronico',
+		}
+
+class editar_informacion_form(UserChangeForm):
+    class Meta:
+        model = Profile
+        fields = [
+        'tfno',
+        ]
+        labels={
+ 		'tfno':'Número telefónico',
+ 		}
+
 
 class agregar_topicos_form(forms.ModelForm):
  	class Meta:
