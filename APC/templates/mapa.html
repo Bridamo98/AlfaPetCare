@@ -61,7 +61,7 @@
     </select>
     <br>
     <br>
-    <button type="button" class="btn btn-secondary" onclick="actualizarMapa()">actualizar</button>
+    <button type="button" class="btn btn-secondary" onclick="actualizarMapa()">Actualizar</button>
     <script>
       var map, infoWindow = '',
         marker, service;
@@ -107,6 +107,12 @@
             for (var i = 0; i < results.length; i++) {
               console.log(results[i]);
               createMarker(results[i]);
+              if (infoWindow) {
+                infoWindow.close();
+              }
+              infoWindow = new google.maps.InfoWindow({
+                content: results[i].formatted_address,
+              });
             }
           }
         });
@@ -162,13 +168,6 @@
                   citi = resultArray[i].long_name;
                 }
               }
-              if (infoWindow) {
-                infoWindow.close();
-              }
-              infoWindow = new google.maps.InfoWindow({
-                content: addresss
-              });
-              infoWindow.open(map, marker);
             });
 
           }
