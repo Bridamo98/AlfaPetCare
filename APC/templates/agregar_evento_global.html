@@ -1,0 +1,22 @@
+{% extends 'index.html'%}
+{% load crispy_forms_tags %}
+{% block encabezado%}
+{% endblock encabezado%}
+
+{% block titulo %}Agregar evento global{% endblock titulo %}
+{% block cuerpo %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Agregar evento global</h4>
+  </div>
+  <div class="panel-body">
+    <form role="form" method="post">
+      {% csrf_token %}
+      {{evento_form|crispy}}
+      {{sitio_form|crispy}}
+      <button type="reset" class="btn btn-default">Limpiar</button>
+      <button type="submit" class="btn btn-default" name="send">Confirmar</button>
+    </form>
+  </div>
+</div>
+{% endblock cuerpo %}

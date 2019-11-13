@@ -33,4 +33,6 @@ urlpatterns = [
     path('topicos/agregar_topicos/',login_required(Agregar_topicos), name = 'agregar_topicos'),
     path('editar_perfil/',login_required(Editar_perfil), name = 'editar_perfil'),
     path('editar_perfil/cambiar_contraseña/',login_required(Cambiar_password), name = 'cambiar_password'),
+    path('publicaciones/', include(('apps.publicaciones.urls','publicaciones'))),#Enlazar una url de app con la del proyecto
+
 ]
