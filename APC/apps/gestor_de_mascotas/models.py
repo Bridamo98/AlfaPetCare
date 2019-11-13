@@ -2,6 +2,12 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
 from apps.gestor_de_usuarios.models import Profile
+from django.core.exceptions import ValidationError
+from datetime import date
+
+def validate_current_century(value):
+    if value >= date.today():
+        raise ValidationError(u'%s es una fecha inválida!' % value)
 
 class Enfermedad(models.Model):
     nombre = models.CharField(max_length = 30, blank = False, null = False)
@@ -96,7 +102,7 @@ class Mascota(models.Model):
     usuario = models.ForeignKey(Profile,on_delete=models.CASCADE,null=False)
     nombre = models.CharField(max_length = 30, blank = False, null = False)
     tipo = models.CharField(max_length = 6, blank = False, null = False, choices = TIPOS)
-    fecha_nacimiento = models.DateField('Fecha nacimiento', blank = False, null = False)
+    fecha_nacimiento = models.DateField('Fecha nacimiento', blank = False, null = False, validators=[validate_current_century])
     sexo = models.CharField(max_length = 7, blank = False, null = False, choices = SEXO)
     raza = models.CharField(max_length = 30, blank = False, null = False, choices = RAZAS, default = None)
     color = models.ManyToManyField(Color, blank=True)
