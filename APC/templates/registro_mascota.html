@@ -16,8 +16,8 @@
       <button type="reset" class="btn btn-default">Limpiar</button>
       <button type="submit" class="btn btn-default" name="send">Registrar mascota</button>
     </form>
-
     <script>
+
       window.onload=function(){
         var razas_perro = ["Weimaraner","Viejo Pastor Inglés","Terrier Yorkshire","Terrier Escocés","Terranova",
         "Springer Spaniel","Shih Tzu","Shiba Inu","Shar Pei","Schnauzer Miniatura","San Bernardo","Rottweiler",
@@ -30,33 +30,42 @@
         "Korat","Somalí","Sphynx","Siberiano","Exótico","Birmano","Bosque de Noruega","Bengalí","Abisinio","Balinés",
         "Maine Coon","British Shorthair","Ruso Azul","Bombay","Persa","Siamés","Ragdoll","Criollo"];
 
+        var tamanios_perro = ["Enano","Pequeño","Mediano","Grande","Gigante"]
+
+        var tamanios_gato = ["Enano","Pequeño","Mediano","Grande"]
+
       	var tipo_mascota = document.getElementById("id_tipo")
         var razas = document.getElementById("id_raza")
+        var tamanios = document.getElementById("id_tamanio")
         var enfermedades_perro = document.getElementById("div_id_enfermedades")
         var enfermedades_gato = document.getElementById("div_id_enfermedades_gato")
         razas.options.length = 1;
+        tamanios.options.length = 1;
         enfermedades_perro.style.display = 'none';
         enfermedades_gato.style.display = 'none';
 
         tipo_mascota.addEventListener("change",function(){
-          //document.write(enfermedades[0])
           var razas2 = document.getElementById("id_raza")
           razas2.options.length = 1;
+          var tamanios2 = document.getElementById("id_tamanio")
+          tamanios2.options.length = 1;
           enfermedades_perro.style.display = 'none';
           enfermedades_gato.style.display = 'none';
 
           if (tipo_mascota.value == "Perro"){
-            agregar_razas(razas, razas_perro);
+            agregar_valores(razas, razas_perro);
+            agregar_valores(tamanios, tamanios_perro)
             enfermedades_perro.style.display = 'block';
           }
           else if (tipo_mascota.value == "Gato"){
-            agregar_razas(razas, razas_gato);
+            agregar_valores(razas, razas_gato);
+            agregar_valores(tamanios, tamanios_gato)
             enfermedades_gato.style.display = 'block';
           }
       	});
       };
 
-      function agregar_razas(elemento, valores){
+      function agregar_valores(elemento, valores){
         for (i = 0; i < valores.length; i++){
           var raza = valores[i]
           var option = document.createElement("option");

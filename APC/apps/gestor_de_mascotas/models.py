@@ -29,9 +29,6 @@ class Enfermedad2(models.Model):
         verbose_name_plural = 'Enfermedades2'
         ordering = ['nombre']
 
-class Color(models.Model):
-    nombre = models.CharField(max_length = 30, blank = False, null = False)
-
 class Mascota(models.Model):
     TIPOS = (
         ('Perro', 'Perro'),
@@ -114,13 +111,23 @@ class Mascota(models.Model):
         ('Ragdoll', 'Ragdoll'),
         ('Criollo', 'Criollo'),
     )
+    TAMANIO = (
+        ('','---------'),
+        ('Enano', 'Enano'),
+        ('Pequeño', 'Pequeño'),
+        ('Mediano', 'Mediano'),
+        ('Grande', 'Grande'),
+        ('Gigante', 'Gigante'),
+    )
     usuario = models.ForeignKey(Profile,on_delete=models.CASCADE,null=False)
     nombre = models.CharField(max_length = 30, blank = False, null = False)
     tipo = models.CharField(max_length = 6, blank = False, null = False, choices = TIPOS)
     fecha_nacimiento = models.DateField('Fecha nacimiento', blank = False, null = False, validators=[validate_current_century])
     sexo = models.CharField(max_length = 7, blank = False, null = False, choices = SEXO)
-    raza = models.CharField(max_length = 30, blank = False, null = False, choices = RAZAS, default = None)
-    color = models.ManyToManyField(Color, blank=True)
+    raza = models.CharField(max_length = 30, blank = False, null = False, choices = RAZAS)
+    color = models.CharField(max_length = 20, blank = False, null = False)
+    peso = models.PositiveIntegerField(blank=False, null=False, validators=[MinValueValidator(1),MaxValueValidator(100)])
+    tamanio = models.CharField(max_length = 9, blank = False, null = False, choices = TAMANIO,  default = None)
     enfermedades = models.ManyToManyField(Enfermedad, blank=True)
     enfermedades_gato = models.ManyToManyField(Enfermedad2, blank=True)
     #color = models.CharField(max_length = 20, blank = False, null = False)
