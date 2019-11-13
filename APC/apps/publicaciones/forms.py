@@ -43,6 +43,6 @@ class evento_global_form(forms.ModelForm):
  		}
  		widgets = {
             'fecha_evento': DateInput(),
-            #'hora_evento': forms.CheckboxSelectMultiple(),
+            'hora_evento': forms.TextInput(attrs={'class': 'form-control', 'type': 'time'}),
         }
 #end class

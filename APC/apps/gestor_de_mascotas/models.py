@@ -14,6 +14,21 @@ class Enfermedad(models.Model):
     def __str__(self): #To string
         return self.nombre
 
+    class Meta:
+        verbose_name = 'Enfermedad'
+        verbose_name_plural = 'Enfermedades'
+        ordering = ['nombre']
+
+class Enfermedad2(models.Model):
+    nombre = models.CharField(max_length = 30, blank = False, null = False)
+    def __str__(self): #To string
+        return self.nombre
+
+    class Meta:
+        verbose_name = 'Enfermedad2'
+        verbose_name_plural = 'Enfermedades2'
+        ordering = ['nombre']
+
 class Color(models.Model):
     nombre = models.CharField(max_length = 30, blank = False, null = False)
 
@@ -107,6 +122,7 @@ class Mascota(models.Model):
     raza = models.CharField(max_length = 30, blank = False, null = False, choices = RAZAS, default = None)
     color = models.ManyToManyField(Color, blank=True)
     enfermedades = models.ManyToManyField(Enfermedad, blank=True)
+    enfermedades_gato = models.ManyToManyField(Enfermedad2, blank=True)
     #color = models.CharField(max_length = 20, blank = False, null = False)
     #peso = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1),MaxValueValidator(100)])
     #tamanio = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1),MaxValueValidator(100)])

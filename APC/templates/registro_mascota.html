@@ -32,32 +32,27 @@
 
       	var tipo_mascota = document.getElementById("id_tipo")
         var razas = document.getElementById("id_raza")
-        var enfermedades = document.getElementById("id_enfermedades")
+        var enfermedades_perro = document.getElementById("div_id_enfermedades")
+        var enfermedades_gato = document.getElementById("div_id_enfermedades_gato")
         razas.options.length = 1;
-        //enfermedades.disabled = false;
-
-
+        enfermedades_perro.style.display = 'none';
+        enfermedades_gato.style.display = 'none';
 
         tipo_mascota.addEventListener("change",function(){
           //document.write(enfermedades[0])
           var razas2 = document.getElementById("id_raza")
           razas2.options.length = 1;
+          enfermedades_perro.style.display = 'none';
+          enfermedades_gato.style.display = 'none';
 
           if (tipo_mascota.value == "Perro"){
             agregar_razas(razas, razas_perro);
+            enfermedades_perro.style.display = 'block';
           }
           else if (tipo_mascota.value == "Gato"){
             agregar_razas(razas, razas_gato);
+            enfermedades_gato.style.display = 'block';
           }
-
-          /*for (var i=0, n=checkboxes.length;i<n;i++)
-          {
-              if (checkboxes[i].checked)
-              {
-                  vals += ","+checkboxes[i].value;
-              }
-          }
-          if (vals) vals = vals.substring(1);*/
       	});
       };
 

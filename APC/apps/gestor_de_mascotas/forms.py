@@ -15,7 +15,7 @@ class registro_mascota_form(forms.ModelForm):
         'sexo',
         'raza',
         'enfermedades',
-
+        'enfermedades_gato',
  		 ]
 
  		labels={
@@ -24,10 +24,12 @@ class registro_mascota_form(forms.ModelForm):
         'fecha_nacimiento':'Digite la fecha de nacimiento',
         'sexo':'Escoja el sexo de la mascota',
         'raza':'Escoja la raza de la mascota',
-        'enfermedades':'Escoja las enfermedades de la mascota',
+        'enfermedades':'Escoja las enfermedades de la mascota (opcional)',
+        'enfermedades_gato':'Escoja las enfermedades de la mascota (opcional)',
  		}
  		widgets = {
             'fecha_nacimiento': DateInput(),
             'enfermedades': forms.CheckboxSelectMultiple(),
+            'enfermedades_gato': forms.CheckboxSelectMultiple(),
         }
     #end class

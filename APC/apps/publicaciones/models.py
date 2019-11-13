@@ -35,7 +35,7 @@ class Evento_global(models.Model):
     nombre_evento = models.CharField(max_length = 30, blank = False, null = False)
     tipo_evento = models.CharField(max_length = 10, blank = False, null = False, choices = TIPOS)
     fecha_evento = models.DateField('Fecha del evento', blank = False, null = False)
-    hora_evento = models.TimeField(auto_now=False, auto_now_add=False)
+    hora_evento = models.DateTimeField(auto_now=False, auto_now_add=False)
     lugar = models.ForeignKey(Lugar,on_delete=models.CASCADE,null=False)
 
 
