@@ -1,6 +1,6 @@
 from django import forms
 from apps.gestor_de_mascotas.forms import DateInput
-from .models import Evento_global, Lugar
+from .models import Evento_global, Lugar, Conversacion_global, Mensaje
 class lugar_form(forms.ModelForm):
  	class Meta:
  		model=Lugar
@@ -45,4 +45,29 @@ class evento_global_form(forms.ModelForm):
             'fecha_evento': DateInput(),
             'hora_evento': forms.TextInput(attrs={'class': 'form-control', 'type': 'time'}),
         }
+#end class
+
+class Conversacion_global_form(forms.ModelForm):
+ 	class Meta:
+ 		model=Conversacion_global
+ 		fields=[
+        'titulo',
+        'topico',
+ 		 ]
+
+ 		labels={
+ 		'titulo':'Título de la conversación',
+        'topico':'Tópico de la conversación',
+ 		}
+#end class
+
+class Mensaje_form(forms.ModelForm):
+ 	class Meta:
+ 		model = Mensaje
+ 		fields=[
+        'contenido',
+ 		 ]
+ 		labels={
+ 		'contenido':'Mensaje',
+ 		}
 #end class

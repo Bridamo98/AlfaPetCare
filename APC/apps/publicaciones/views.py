@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .forms import evento_global_form, lugar_form
+from .forms import evento_global_form, lugar_form, Conversacion_global_form, Mensaje_form
 from apps.gestor_de_usuarios.models import Profile
+from .models import Conversacion_global
 
 def agregar_evento_global(request):
     profile = Profile.objects.get(user = request.user)
@@ -23,4 +24,41 @@ def agregar_evento_global(request):
     return render(request,'agregar_evento_global.html',{'evento_form':evento_form,'sitio_form':sitio_form})
 #end def
 
-# Create your views here.
+def crear_conversacion_global(request):
+    profile = Profile.objects.get(user = request.user)
+    if request.method == "POST":
+        conversacion_form = Conversacion_global_form(request.POST)
+        if conversacion_form.is_valid():
+            conversacion = conversacion_form.save(commit=False)
+            conversacion.usuario = profile
+            conversacion.save()
+            return redirect('index')
+    else:
+        conversacion_form = Conversacion_global_form()
+    return render(request,'crear_conversacion_global.html',{'conversacion_form':conversacion_form,'profile':profile})
+#end def
+
+def conversaciones_globales(request):
+    profile = Profile.objects.get(user = request.user)
+    conversaciones = Conversacion_global.objects.filter(usuario = profile)
+    for topico in profile.topicos.all():
+        conversaciones_t = Conversacion_global.objects.all().filter(topico = topico)
+        conversaciones = conversaciones | conversaciones_t
+    #conversaciones = conversaciones_propias + conversaciones_topicos
+    return render(request,'conversaciones_globales.html',{'profile':profile,'conversaciones':conversaciones})#HTTP request
+#end def
+
+def ver_conversacion(request):
+    profile = Profile.objects.get(user = request.user)
+    if request.method == "POST":
+        mensaje_form = Mensaje_form(request.POST)
+        if mensaje_form.is_valid():
+            mensaje = mensaje_form.save(commit=False)
+            mensaje.usuario = profile
+            mensaje.save()
+            return redirect('index')
+    else:
+        mensaje_form = Mensaje_form()
+    return render(request,'ver_conversacion.html',{'mensaje_form':mensaje_form,'profile':profile})
+
+#end def

@@ -1,0 +1,35 @@
+{% extends 'index.html'%}
+{% load crispy_forms_tags %}
+{% block encabezado%}
+{% endblock encabezado%}
+
+{% block titulo %}Mis Conversaciones Globales{% endblock titulo %}
+{% block cuerpo %}
+<link rel="stylesheet" href="/css/estilos.css">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Mis Conversaciones Globales</h4>
+  </div>
+  <div class="panel-body">
+    <table style="width:100%">
+      <tr>
+        <th>Nombre</th>
+        <th>Tópico</th>
+        <th>Creador</th>
+        <th></th>
+      </tr>
+      {% for conversacion in conversaciones %}
+      <tr>
+        <td>{{conversacion}}</td>
+        <td>{{conversacion.topico}}</td>
+        <td>{{conversacion.usuario}}</td>
+        <td>
+          <a href="{%url 'publicaciones:ver_conversacion'%}" class="text-center">Ver Conversación</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  </div>
+</div>
+{% endblock cuerpo %}
