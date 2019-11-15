@@ -80,7 +80,7 @@ class Calendar(HTMLCalendar):
 			d += f'<li> {event.nombre_evento} </li>'
 
 		if day != 0:
-			return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
+			return f"<td><span class='date'>{day}</span><ul style = 'height: 100%;padding: 0px 5px 0px 20px;'> {d} </ul></td>"
 		return '<td></td>'
 
 	# formats a week as a tr
