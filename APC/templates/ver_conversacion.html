@@ -10,6 +10,19 @@
     <h4>Ver Conversación</h4>
   </div>
   <div class="panel-body">
+    <h5>Título: {{conversacion.titulo}}</h5>
+    <h5>Tópico: {{conversacion.topico}}</h5>
+    <h5>Dueño: {{conversacion.usuario}}</h5>
+    <div class="chatbox">
+
+      {% for mensaje in conversacion.mensaje_set.all %}
+      <p>
+        ({{mensaje.fecha}})
+        <b>{{mensaje.usuario}}:</b>
+        {{mensaje.contenido}}
+      </p>
+      {% endfor %}
+    </div>
     <form role="form" method="post">
       {% csrf_token %}
       {{mensaje_form|crispy}}

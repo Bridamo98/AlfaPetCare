@@ -24,7 +24,7 @@
         <td>{{conversacion.topico}}</td>
         <td>{{conversacion.usuario}}</td>
         <td>
-          <a href="{%url 'publicaciones:ver_conversacion'%}" class="text-center">Ver Conversación</a>
+          <a href="{%url 'publicaciones:ver_conversacion' conversacion_id=conversacion.id%}" class="text-center">Ver Conversación</a>
         </td>
       </tr>
       {% endfor %}

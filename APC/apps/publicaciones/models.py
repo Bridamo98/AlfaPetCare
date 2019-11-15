@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
 from apps.gestor_de_usuarios.models import Profile, Topico
+from django.utils import timezone
 
 
 class Lugar(models.Model):
@@ -55,5 +56,8 @@ class Conversacion_global(models.Model):
 class Mensaje(models.Model):
     usuario = models.ForeignKey(Profile,on_delete=models.CASCADE,null=False)
     contenido = models.TextField(blank = False, null = False)
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha = models.DateTimeField(default=timezone.now)
     conversacion = models.ForeignKey(Conversacion_global, on_delete=models.CASCADE, null = False)
+
+    def __str__(self): #To string
+        return self.contenido

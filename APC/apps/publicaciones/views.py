@@ -44,21 +44,22 @@ def conversaciones_globales(request):
     for topico in profile.topicos.all():
         conversaciones_t = Conversacion_global.objects.all().filter(topico = topico)
         conversaciones = conversaciones | conversaciones_t
-    #conversaciones = conversaciones_propias + conversaciones_topicos
     return render(request,'conversaciones_globales.html',{'profile':profile,'conversaciones':conversaciones})#HTTP request
 #end def
 
-def ver_conversacion(request):
+def ver_conversacion(request, conversacion_id):
     profile = Profile.objects.get(user = request.user)
+    conversacion = Conversacion_global.objects.get(id = conversacion_id)
     if request.method == "POST":
         mensaje_form = Mensaje_form(request.POST)
         if mensaje_form.is_valid():
             mensaje = mensaje_form.save(commit=False)
             mensaje.usuario = profile
+            mensaje.conversacion = conversacion
             mensaje.save()
-            return redirect('index')
+            return redirect('publicaciones:conversaciones_globales')
     else:
         mensaje_form = Mensaje_form()
-    return render(request,'ver_conversacion.html',{'mensaje_form':mensaje_form,'profile':profile})
+    return render(request,'ver_conversacion.html',{'mensaje_form':mensaje_form,'conversacion':conversacion,'profile':profile})
 
 #end def
