@@ -14,6 +14,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     tfno = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1000000),MaxValueValidator(9999999999)])
     topicos = models.ManyToManyField(Topico, blank=True)
+    foto = models.ImageField(upload_to='images/',default = 'images/anonimo.png', null = True, blank = True)
     #profile_img=models.ImageField(upload_to='images/profile/',default='images/profile/perfilb.jpg',null=False,blank=False)
     def __str__(self): #To string
         return self.user.username

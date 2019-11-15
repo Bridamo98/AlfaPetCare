@@ -21,6 +21,10 @@ from django.contrib.auth.decorators import login_required
 from apps.gestor_de_usuarios.views import Login, Logout, Registro, Topicos, Agregar_topicos, Editar_perfil, Cambiar_password
 from apps.mapa.views import Mapa
 
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings # new
+
 from apps.publicaciones.views import CalendarView
 
 
@@ -42,3 +46,6 @@ urlpatterns = [
 
 
 ]
+urlpatterns += staticfiles_urlpatterns()
+if settings.DEBUG: # new
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

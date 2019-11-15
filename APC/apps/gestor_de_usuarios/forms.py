@@ -33,6 +33,7 @@ class infoForm(forms.ModelForm):
  		model=Profile
  		fields=[
  		'tfno',
+        'foto',
  		 ]
 
  		labels={
@@ -65,6 +66,7 @@ class editar_informacion_form(UserChangeForm):
         model = Profile
         fields = [
         'tfno',
+        'foto'
         ]
         labels={
  		'tfno':'Número telefónico',

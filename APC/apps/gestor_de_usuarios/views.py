@@ -58,7 +58,7 @@ Valida y renderiza el registro de un usuario
 def Registro(request):
     if request.method == "POST":
         user_form = RegistroForm(request.POST)
-        info_form = infoForm(request.POST)
+        info_form = infoForm(request.POST, request.FILES)
         if user_form.is_valid() and info_form.is_valid():
             user=user_form.save(commit=False)
             profile=info_form.save(commit=False)
@@ -76,7 +76,7 @@ def Editar_perfil(request):
     profile = Profile.objects.get(user = request.user)
     if request.method == "POST":
         edit_user_form = editar_perfil_form(request.POST, instance = request.user)
-        edit_info_form = editar_informacion_form(request.POST, instance = profile)
+        edit_info_form = editar_informacion_form(request.POST, request.FILES, instance = profile)
         #edit_password_form = PasswordChangeForm(data = request.POST, user = request.user)
         if edit_user_form.is_valid() and edit_info_form.is_valid():
             edit_user_form.save()

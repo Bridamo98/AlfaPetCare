@@ -10,7 +10,7 @@
     <h4>Editar Perfil</h4>
   </div>
   <div class="panel-body">
-    <form role="form" method="post">
+    <form role="form" method="post" enctype='multipart/form-data'>
       {% csrf_token %}
       {{edit_user_form|crispy}}
       {{edit_info_form|crispy}}
