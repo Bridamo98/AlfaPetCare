@@ -119,6 +119,20 @@ class Mascota(models.Model):
         ('Grande', 'Grande'),
         ('Gigante', 'Gigante'),
     )
+    ESTERILIZADO = (
+        ('','---------'),
+        ('Si', 'Si'),
+        ('No', 'No'),
+    )
+    ESTADOS = (
+        ('','---------'),
+        ('Normal', 'Normal'),
+        ('Perdido', 'Perdido'),
+        ('Adopción', 'Adopcion'),
+        ('Maltratado', 'Matratado'),
+        ('Accidentado', 'Accidentado'),
+        ('Encontrado', 'Encontrado'),
+    )
     usuario = models.ForeignKey(Profile,on_delete=models.CASCADE,null=False)
     nombre = models.CharField(max_length = 30, blank = False, null = False)
     tipo = models.CharField(max_length = 6, blank = False, null = False, choices = TIPOS)
@@ -127,9 +141,8 @@ class Mascota(models.Model):
     raza = models.CharField(max_length = 30, blank = False, null = False, choices = RAZAS)
     color = models.CharField(max_length = 20, blank = False, null = False)
     peso = models.PositiveIntegerField(blank=False, null=False, validators=[MinValueValidator(1),MaxValueValidator(100)])
-    tamanio = models.CharField(max_length = 9, blank = False, null = False, choices = TAMANIO,  default = None)
+    tamanio = models.CharField(max_length = 9, blank = False, null = False, choices = TAMANIO)
     enfermedades = models.ManyToManyField(Enfermedad, blank=True)
     enfermedades_gato = models.ManyToManyField(Enfermedad2, blank=True)
-    #color = models.CharField(max_length = 20, blank = False, null = False)
-    #peso = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1),MaxValueValidator(100)])
-    #tamanio = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1),MaxValueValidator(100)])
+    esterilizado = models.CharField(max_length = 3, blank = False, null = False, choices = ESTERILIZADO)
+    estado = models.CharField(max_length = 15, blank = False, null = False, choices = ESTADOS, default = None)

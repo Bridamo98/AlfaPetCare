@@ -19,6 +19,8 @@ class registro_mascota_form(forms.ModelForm):
         'tamanio',
         'enfermedades',
         'enfermedades_gato',
+        'esterilizado',
+        'estado',
  		 ]
 
  		labels={
@@ -32,6 +34,8 @@ class registro_mascota_form(forms.ModelForm):
         'tamanio':'Escoja el tamanio de la mascota',
         'enfermedades':'Escoja las enfermedades de la mascota (opcional)',
         'enfermedades_gato':'Escoja las enfermedades de la mascota (opcional)',
+        'esterilizado':'Esterilizado',
+        'estado':'Estado',
  		}
  		widgets = {
             'fecha_nacimiento': DateInput(),
