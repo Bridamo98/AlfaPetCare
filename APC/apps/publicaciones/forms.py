@@ -10,6 +10,8 @@ class lugar_form(forms.ModelForm):
         'telefono_cel',
         'email',
         'direccion',
+        'longitud',#------
+        'latitud',#------
  		 ]
 
  		labels={
@@ -18,6 +20,8 @@ class lugar_form(forms.ModelForm):
         'telefono_cel':'Telefono de celular del lugar',
         'email':'Correo electrónico del lugar',
         'direccion':'Dirección del lugar',
+        'longitud':'',#------
+        'latitud':'',#------
  		}
  		widgets = {
             #'fecha_evento': DateInput(),
@@ -26,25 +30,31 @@ class lugar_form(forms.ModelForm):
 #end class
 
 class evento_global_form(forms.ModelForm):
- 	class Meta:
- 		model=Evento_global
- 		fields=[
- 		'nombre_evento',
+  class Meta:
+    model = Evento_global
+    # datetime-local is a HTML5 input type, format to make date time show on fields
+    fields = [
+        'nombre_evento',
         'tipo_evento',
-        'fecha_evento',
-        'hora_evento',
- 		 ]
-
- 		labels={
- 		'nombre_evento':'Nombre del evento',
+        'fecha_hora_evento_inicio',
+        'fecha_hora_evento_final'
+    ]
+    labels = {
+        'nombre_evento':'Nombre del evento',
         'tipo_evento':'Tipo del evento',
-        'fecha_evento':'Fecha del evento',
-        'hora_evento':'Hora del evento',
- 		}
- 		widgets = {
-            'fecha_evento': DateInput(),
-            'hora_evento': forms.TextInput(attrs={'class': 'form-control', 'type': 'time'}),
-        }
+        'fecha_hora_evento_inicio':'Fecha y hora del inicio del evento',
+        'fecha_hora_evento_final':'Fecha y hora del final del evento',
+    }
+    widgets = {
+      'fecha_hora_evento_inicio': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+      'fecha_hora_evento_final': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+    }
+
+  def __init__(self, *args, **kwargs):
+    super(evento_global_form, self).__init__(*args, **kwargs)
+    # input_formats to parse HTML5 datetime-local input to datetime field
+    self.fields['fecha_hora_evento_inicio'].input_formats = ('%Y-%m-%dT%H:%M',)
+    self.fields['fecha_hora_evento_final'].input_formats = ('%Y-%m-%dT%H:%M',)
 #end class
 
 class Conversacion_global_form(forms.ModelForm):

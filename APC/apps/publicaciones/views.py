@@ -1,7 +1,15 @@
+from datetime import datetime, timedelta, date
+import calendar
+
 from django.shortcuts import render, redirect
 from .forms import evento_global_form, lugar_form, Conversacion_global_form, Mensaje_form
+
+from django.views import generic
+from django.http import HttpResponse
+from django.utils.safestring import mark_safe
+
 from apps.gestor_de_usuarios.models import Profile
-from .models import Conversacion_global
+from .models import Conversacion_global, Evento_global, Calendar
 
 def agregar_evento_global(request):
     profile = Profile.objects.get(user = request.user)
@@ -16,7 +24,7 @@ def agregar_evento_global(request):
             evento.usuario = profile
             evento.lugar = lugar
 
-            evento.save
+            evento.save()
             return redirect('index')
     else:
         evento_form = evento_global_form()
@@ -63,3 +71,36 @@ def ver_conversacion(request, conversacion_id):
     return render(request,'ver_conversacion.html',{'mensaje_form':mensaje_form,'conversacion':conversacion,'profile':profile})
 
 #end def
+
+class CalendarView(generic.ListView):
+    model = Evento_global
+    template_name = 'calendario_global.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        d = get_date(self.request.GET.get('month', None))
+        cal = Calendar(d.year, d.month)
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
+        return context
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
+
+def prev_month(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+    return month
+
+def next_month(d):
+    days_in_month = calendar.monthrange(d.year, d.month)[1]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+    return month

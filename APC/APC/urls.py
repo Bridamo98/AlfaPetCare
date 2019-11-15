@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from apps.gestor_de_usuarios.views import Home#para la clase requerida
 from django.contrib.auth.decorators import login_required
 from apps.gestor_de_usuarios.views import Login, Logout, Registro, Topicos, Agregar_topicos, Editar_perfil, Cambiar_password
 from apps.mapa.views import Mapa
+
+from apps.publicaciones.views import CalendarView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,5 +38,7 @@ urlpatterns = [
     path('editar_perfil/',login_required(Editar_perfil), name = 'editar_perfil'),
     path('editar_perfil/cambiar_contraseña/',login_required(Cambiar_password), name = 'cambiar_password'),
     path('publicaciones/', include(('apps.publicaciones.urls','publicaciones'))),#Enlazar una url de app con la del proyecto
+    url(r'^calendar/$', CalendarView.as_view(), name='calendar'),
+
 
 ]
