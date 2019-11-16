@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf.urls import url
 from apps.gestor_de_usuarios.views import Home#para la clase requerida
 from django.contrib.auth.decorators import login_required
-from apps.gestor_de_usuarios.views import Login, Logout, Registro, Topicos, Agregar_topicos, Editar_perfil, Cambiar_password
+from apps.gestor_de_usuarios.views import Login, Logout, Registro, Topicos, Agregar_topicos, Editar_perfil, Cambiar_password, Agregar_servicio
 from apps.mapa.views import Mapa
 
 from django.contrib.staticfiles.urls import static
@@ -41,11 +41,11 @@ urlpatterns = [
     path('topicos/agregar_topicos/',login_required(Agregar_topicos), name = 'agregar_topicos'),
     path('editar_perfil/',login_required(Editar_perfil), name = 'editar_perfil'),
     path('editar_perfil/cambiar_contraseña/',login_required(Cambiar_password), name = 'cambiar_password'),
+    path('agregar_servicio/',login_required(Agregar_servicio), name = 'agregar_servicio'),
     path('publicaciones/', include(('apps.publicaciones.urls','publicaciones'))),#Enlazar una url de app con la del proyecto
     url(r'^calendar/$', CalendarView.as_view(), name='calendar'),
 
 
 ]
 urlpatterns += staticfiles_urlpatterns()
-if settings.DEBUG: # new
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

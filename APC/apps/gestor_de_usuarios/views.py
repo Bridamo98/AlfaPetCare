@@ -6,12 +6,11 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-from .forms import FormularioLogin, agregar_topicos_form, editar_perfil_form, editar_informacion_form
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
+from .forms import *
 
-from .forms import RegistroForm, infoForm
 from .models import Profile
 """
 Renderiza el template index o página de inicio
@@ -120,4 +119,18 @@ def Agregar_topicos(request):
     else:
         a_topicos_form = agregar_topicos_form()
     return render(request,'agregar_topicos.html',{'agregar_topicos_form':agregar_topicos_form,'profile':profile,})#HTTP request
+#end def
+
+def Agregar_servicio(request):
+    profile = Profile.objects.get(user = request.user)
+    if request.method == "POST":
+        servicio_form = agregar_servicio_form(request.POST)
+        if servicio_form.is_valid():
+            servicio = servicio_form.save()
+            servicio.usuario=profile
+            servicio.save()
+            return redirect('index')
+    else:
+        servicio_form = agregar_servicio_form()
+    return render(request,'agregar_servicio.html',{'servicio_form':servicio_form,'profile':profile,})#HTTP request
 #end def

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 
-from .models import Profile
+from .models import Profile, Servicio
 
 class FormularioLogin(AuthenticationForm):
     def __init__(self,*args,**kwargs):
@@ -87,3 +87,31 @@ class agregar_topicos_form(forms.ModelForm):
             'topicos': forms.CheckboxSelectMultiple(),
         }
     #end class
+
+class agregar_servicio_form(forms.ModelForm):
+ 	class Meta:
+ 		model=Servicio
+ 		fields=[
+ 		'nombre_responsable',
+ 		'correo',
+ 		'telefono',
+ 		'logo',
+ 		'direccion',
+        'longitud',
+        'latitud',
+ 		 ]
+
+ 		labels={
+        'nombre_responsable':'Nombre de quien provee el servicio',
+ 		'correo':'Correo del proveedor',
+ 		'telefono':'Telefono del proveedor',
+ 		'logo':'Imagen del servicio',
+ 		'direccion':'Dirección del proveedor',
+        'longitud':'',#------
+        'latitud':'',#------
+ 		}
+ 		widgets = {
+
+        }
+    #end class
+#end-class

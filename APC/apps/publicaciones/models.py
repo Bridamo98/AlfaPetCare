@@ -18,8 +18,6 @@ class Lugar(models.Model):
         ('Sitio Pet Friendly','Sitio Pet Friendly'),
         ('Tiendas para mascotas','Tiendas para mascotas'),
         ('Spa para mascotas','Spa para mascotas'),
-        ('Eventos','Eventos'),
-        ('Zona dee peligro','Zona de peligro'),
     )
     nombre_lugar = models.CharField(max_length = 256, blank = False, null = False)
     tipo_lugar = models.CharField(max_length = 256, blank = False, null = False, choices = TIPOS)
@@ -35,8 +33,10 @@ class Lugar(models.Model):
 
 class Evento_global(models.Model):
     TIPOS = (
-        ('Global', 'Global'),
-        ('Personal', 'Personal'),
+        ('Adopción', 'Adopción'),
+        ('Esterilización', 'Esterilización'),
+        ('Vacunación', 'Vacunación'),
+        ('Feria de mascotas', 'Feria de mascotas'),
     )
     usuario = models.ForeignKey(Profile,on_delete=models.CASCADE,null=False)
     nombre_evento = models.CharField(max_length = 256, blank = False, null = False)
@@ -44,8 +44,7 @@ class Evento_global(models.Model):
     fecha_hora_evento_inicio = models.DateTimeField(auto_now=False, auto_now_add=False, default = None)
     fecha_hora_evento_final = models.DateTimeField(auto_now=False, auto_now_add=False, default = None)
     lugar = models.ForeignKey(Lugar,on_delete=models.CASCADE,null=False)
-
-
+    
     def __str__(self): #To string
         return self.nombre_evento
 
