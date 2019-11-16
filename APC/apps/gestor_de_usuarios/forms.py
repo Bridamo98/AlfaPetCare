@@ -81,7 +81,7 @@ class agregar_topicos_form(forms.ModelForm):
  		 ]
 
  		labels={
-        'topicos':'Escoja los tópicos que quiera agregar',
+        'topicos':'Escoja TODOS los tópicos que quiera tener',
  		}
  		widgets = {
             'topicos': forms.CheckboxSelectMultiple(),
