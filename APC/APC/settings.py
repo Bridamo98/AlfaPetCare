@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'apps.gestor_de_mascotas',
     'apps.mapa',
     'apps.publicaciones',
+    'django_filters',
+    'bootstrapform',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 MIDDLEWARE = [

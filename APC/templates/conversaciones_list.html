@@ -1,0 +1,27 @@
+{% extends 'index.html'%}
+{% load crispy_forms_tags %}
+{% block encabezado%}
+{% endblock encabezado%}
+
+{% block titulo %}Conversacion List{% endblock titulo %}
+{% block cuerpo %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Conversacion List</h4>
+  </div>
+  <div class="panel-body">
+    <form method="GET">
+      {{ filter.form|crispy }}
+      <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <ul>
+      {% for conversacion in filter.qs%}
+      <li>
+        <a href="#">{{ conversacion.titulo }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock cuerpo %}

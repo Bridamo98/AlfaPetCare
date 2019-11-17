@@ -10,6 +10,7 @@ from django.utils.safestring import mark_safe
 
 from apps.gestor_de_usuarios.models import Profile
 from .models import *
+from .filters import Conversacion_filter
 
 def agregar_evento_global(request):
     profile = Profile.objects.get(user = request.user)
@@ -112,3 +113,21 @@ def next_month(d):
     next_month = last + timedelta(days=1)
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
+
+def buscar_conversacion_global(request):
+    profile = Profile.objects.get(user = request.user)
+    conversaciones = Conversacion_global.objects.filter(usuario = profile)
+    for topico in profile.topicos.all():
+        conversaciones_t = Conversacion_global.objects.all().filter(topico = topico)
+        conversaciones = conversaciones | conversaciones_t
+    return render(request,'conversaciones_globales.html',{'profile':profile,'conversaciones':conversaciones})#HTTP request
+#end def
+
+class Conversaciones_ListView(generic.ListView):
+    model = Conversacion_global
+    template_name = 'conversaciones_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = Conversacion_filter(self.request.GET, queryset = self.get_queryset())
+        return context
