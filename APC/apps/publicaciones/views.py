@@ -34,6 +34,7 @@ def agregar_evento_personal(request, mascota_id):
         if evento_form.is_valid():
             evento = evento_form.save(commit=False)
             evento.mascota = mascota
+            evento.usuario = profile
             evento.save()
             return redirect('index')
     else:
@@ -130,4 +131,18 @@ class Conversaciones_ListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = Conversacion_filter(self.request.GET, queryset = self.get_queryset())
+        return context
+
+class Calendario_personal(generic.ListView):
+    model = Evento_personal
+    template_name = 'calendario_personal.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        d = get_date(self.request.GET.get('month', None))
+        profile = Profile.objects.get(user = self.request.user)
+        cal = Calendar2(d.year, d.month)
+        html_cal = cal.formatmonth(withyear=True, prof=profile)
+        context['calendar'] = mark_safe(html_cal)
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
         return context
