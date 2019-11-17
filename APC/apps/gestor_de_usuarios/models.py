@@ -21,21 +21,27 @@ class Profile(models.Model):
 
 class Servicio(models.Model):
     TIPOS = (
-        ('Adopción', 'Adopción'),
-        ('Esterilización', 'Esterilización'),
-        ('Vacunación', 'Vacunación'),
-        ('Feria de mascotas', 'Feria de mascotas'),
+        ('Guardería', 'Guardería'),
+        ('Niñera', 'Niñera'),
+        ('Rescatista', 'Rescatista'),
+        ('Refugio', 'Refugio'),
+        ('Hogar de paso', 'Hogar de paso'),
+        ('Centro de Adopción', 'Centro de Adopción'),
+        ('Paseador', 'Paseador'),
+        ('Servicio de Transporte', 'Servicio de Transporte'),
+        ('Servicio Funerario', 'Servicio Funerario'),
+        ('Fundación de ayuda', 'Fundación de ayuda'),
     )
-    usuario = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
-    nombre_responsable = models.CharField(max_length = 100, blank = False, null = False)
-    correo = models.EmailField(default = "Ninguno",null = True,blank=True)
-    telefono = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1000000),MaxValueValidator(9999999999)])
-    logo = models.ImageField(upload_to='logos/',default = 'images/servicio.png', null = True, blank = True)
+    tipo = models.CharField(max_length = 100, blank = False, null = False, choices = TIPOS, default=None)
 
-    direccion = models.CharField(max_length = 256, blank = False, null = False)
+    direccion = models.CharField(max_length = 256, blank = False, null = False, default=None)
     longitud = models.FloatField(null=True, blank=True, default=None)#------
     latitud = models.FloatField(null=True, blank=True, default=None)#------
+
+    calificacion = models.FloatField(null=True, blank=True, default=None, validators=[MinValueValidator(0.0),MaxValueValidator(5.0)])#------
+    cantidad_calif = models.PositiveIntegerField(blank=True, null=True, default = 0)
 
     #profile_img=models.ImageField(upload_to='images/profile/',default='images/profile/perfilb.jpg',null=False,blank=False)
     def __str__(self): #To string

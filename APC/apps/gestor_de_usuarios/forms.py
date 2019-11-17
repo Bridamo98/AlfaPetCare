@@ -92,20 +92,14 @@ class agregar_servicio_form(forms.ModelForm):
  	class Meta:
  		model=Servicio
  		fields=[
- 		'nombre_responsable',
- 		'correo',
- 		'telefono',
- 		'logo',
+ 		'tipo',
  		'direccion',
         'longitud',
         'latitud',
  		 ]
 
  		labels={
-        'nombre_responsable':'Nombre de quien provee el servicio',
- 		'correo':'Correo del proveedor',
- 		'telefono':'Telefono del proveedor',
- 		'logo':'Imagen del servicio',
+ 		'tipo':'Seleccione el tipo de servicio',
  		'direccion':'Dirección del proveedor',
         'longitud':'',#------
         'latitud':'',#------
