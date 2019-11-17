@@ -126,7 +126,7 @@ def Agregar_servicio(request):
     if request.method == "POST":
         servicio_form = agregar_servicio_form(request.POST)
         if servicio_form.is_valid():
-            servicio = servicio_form.save()
+            servicio = servicio_form.save(commit=False)
             servicio.usuario=profile
             servicio.save()
             return redirect('index')
