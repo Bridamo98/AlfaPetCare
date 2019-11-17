@@ -54,6 +54,7 @@
         </table>
 
         <a href="{%url 'editar_perfil'%}" class="text-center">Editar Mascota</a>
+        <a href="{%url 'publicaciones:agregar_evento_personal' mascota_id=mascota.id%}" class="text-center">Agregar evento personal</a>
       </div>
     </div>
     {% endfor %}

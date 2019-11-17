@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, date
 import calendar
 
 from django.shortcuts import render, redirect
-from .forms import evento_global_form, Conversacion_global_form, Mensaje_form
+from .forms import evento_global_form, Conversacion_global_form, Mensaje_form, evento_personal_form
 
 from django.views import generic
 from django.http import HttpResponse
@@ -36,8 +36,8 @@ def agregar_evento_personal(request, mascota_id):
             evento.save()
             return redirect('index')
     else:
-        evento_form = evento_global_form()
-    return render(request,'agregar_evento_personal.html',{'evento_form':evento_form,'sitio_form':sitio_form})
+        evento_form = evento_personal_form()
+    return render(request,'agregar_evento_personal.html',{'evento_form':evento_form})
 #end def
 
 def crear_conversacion_global(request):
