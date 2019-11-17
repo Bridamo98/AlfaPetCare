@@ -42,8 +42,9 @@
           </li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Mascotas<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="{%url 'mascota:mis_mascotas'%}">Mis mascotas</a></li>
-              <li><a href="{%url 'mascota:registrar_mascota'%}">Añadir mascota</a></li>
+              <li><a href="{% url 'mascota:mis_mascotas'%}">Mis mascotas</a></li>
+              <li><a href="{% url 'mascota:registrar_mascota'%}">Añadir mascota</a></li>
+              <li><a href="{% url 'calendario_personal' %}">Calendario personal</a></li>
             </ul>
           </li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Conversaciones <span class="caret"></span></a>
@@ -56,6 +57,8 @@
             <ul class="dropdown-menu">
               <li><a href="#">Mis eventos</a></li>
               <li><a href="{%url 'publicaciones:agregar_evento_global'%}">Crear evento global</a></li>
+              <li><a href="{% url 'calendar' %}">Calendario global</a></li>
+
             </ul>
           </li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Servicios <span class="caret"></span></a>
@@ -68,7 +71,6 @@
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Mapa <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="{% url 'mapa' %}">Lugares cercanos</a></li>
-              <li><a href="{% url 'calendar' %}">Calendario</a></li>
             </ul>
           </li>
 
