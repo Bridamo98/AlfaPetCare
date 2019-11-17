@@ -10,7 +10,7 @@
     <h4>Registrar Mascota</h4>
   </div>
   <div class="panel-body">
-    <form role="form" method="post">
+    <form role="form" method="post" enctype='multipart/form-data'>
       {% csrf_token %}
       {{mascota_form|crispy}}
       <button type="reset" class="btn btn-default">Limpiar</button>

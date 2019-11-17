@@ -21,6 +21,7 @@ class registro_mascota_form(forms.ModelForm):
         'enfermedades_gato',
         'esterilizado',
         'estado',
+        'foto',
  		 ]
 
  		labels={

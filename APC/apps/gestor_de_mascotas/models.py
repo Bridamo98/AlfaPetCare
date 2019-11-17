@@ -145,4 +145,8 @@ class Mascota(models.Model):
     enfermedades = models.ManyToManyField(Enfermedad, blank=True)
     enfermedades_gato = models.ManyToManyField(Enfermedad2, blank=True)
     esterilizado = models.CharField(max_length = 3, blank = False, null = False, choices = ESTERILIZADO)
-    estado = models.CharField(max_length = 15, blank = False, null = False, choices = ESTADOS, default = None)
+    estado = models.CharField(max_length = 15, blank = False, null = False, choices = ESTADOS)
+    foto = models.ImageField(upload_to='mascotas/',default = 'mascotas/anonima.jpg', null = True, blank = True)
+
+    def __str__(self): #To string
+        return self.nombre

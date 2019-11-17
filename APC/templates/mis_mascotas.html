@@ -1,0 +1,62 @@
+{% extends 'index.html'%}
+{% load crispy_forms_tags %}
+{% block encabezado%}
+{% endblock encabezado%}
+
+{% block titulo %}Mis Mascotas{% endblock titulo %}
+{% block cuerpo %}
+<link rel="stylesheet" href="/css/estilos.css">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Mis Mascotas</h4>
+  </div>
+  <div class="panel-body">
+    {% for mascota in mascotas %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>{{mascota}}</h4>
+      </div>
+      <div class="panel-body">
+        <img class="img-responsive center-block" src="{{mascota.foto.url}}" class="img-rounded" id="Panel_Image" width="150">
+        <table style="width:100%">
+          <tr>
+            <td>
+              <table style="width:100%">
+                <tr>
+                  <td><b>Nombre:</b> {{mascota.nombre}}</td>
+                  <td><b>Color:</b> {{mascota.color}}</td>
+                </tr>
+                <tr>
+                  <td><b>Tipo:</b> {{mascota.tipo}}</td>
+                  <td><b>Peso:</b> {{mascota.peso}}</td>
+                </tr>
+                <tr>
+                  <td><b>Edad:</b> </td>
+                  <td><b>Tamaño:</b> {{mascota.tamanio}}</td>
+                </tr>
+                <tr>
+                  <td><b>Sexo:</b> {{mascota.sexo}}</td>
+                  <td><b>Esterilizado:</b> {{mascota.esterilizado}}</td>
+                </tr>
+                <tr>
+                  <td><b>Raza:</b> {{mascota.raza}}</td>
+                  <td><b>Estado:</b> {{mascota.estado}}</td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <h5><b>Enfermedades</b></h5>
+              {% for enfermedad in mascota.enfermedades.all %}
+                  <li>{{ enfermedad }}</li>
+              {% endfor %}
+            </td>
+          </tr>
+        </table>
+
+        <a href="{%url 'editar_perfil'%}" class="text-center">Editar Mascota</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock cuerpo %}
