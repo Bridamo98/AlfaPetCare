@@ -20,7 +20,7 @@ class Evento_global(models.Model):
     tipo_evento = models.CharField(max_length = 256, blank = False, null = False, choices = TIPOS)
     fecha_hora_evento_inicio = models.DateTimeField(auto_now=False, auto_now_add=False)
     fecha_hora_evento_final = models.DateTimeField(auto_now=False, auto_now_add=False)
-    direccion = models.CharField(max_length = 40, blank = False, null = False, default = None)
+    direccion = models.CharField(max_length = 256, blank = False, null = False, default = None)
     longitud = models.FloatField(null=True, blank=True, default=None)
     latitud = models.FloatField(null=True, blank=True, default=None)
 
