@@ -25,7 +25,7 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings # new
 
-from apps.publicaciones.views import CalendarView, Calendario_personal
+from apps.publicaciones.views import CalendarView
 
 
 urlpatterns = [
@@ -44,7 +44,6 @@ urlpatterns = [
     path('agregar_servicio/',login_required(Agregar_servicio), name = 'agregar_servicio'),
     path('publicaciones/', include(('apps.publicaciones.urls','publicaciones'))),#Enlazar una url de app con la del proyecto
     url(r'^calendar/$', CalendarView.as_view(), name='calendar'),
-    url(r'^calendario_personal/$', Calendario_personal.as_view(), name='calendario_personal'),
 
 
 ]

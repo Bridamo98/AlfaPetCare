@@ -45,4 +45,4 @@ class Servicio(models.Model):
 
     #profile_img=models.ImageField(upload_to='images/profile/',default='images/profile/perfilb.jpg',null=False,blank=False)
     def __str__(self): #To string
-        return self.tipo
+        return self.user.user
