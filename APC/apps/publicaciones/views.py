@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 
 from apps.gestor_de_usuarios.models import Profile
-from .models import Conversacion_global, Evento_global, Calendar
+from .models import *
 
 def agregar_evento_global(request):
     profile = Profile.objects.get(user = request.user)
@@ -30,6 +30,21 @@ def agregar_evento_global(request):
         evento_form = evento_global_form()
         sitio_form = lugar_form()
     return render(request,'agregar_evento_global.html',{'evento_form':evento_form,'sitio_form':sitio_form})
+#end def
+
+def agregar_evento_personal(request, mascota_id):
+    profile = Profile.objects.get(user = request.user)
+    mascota = Mascota.objects.get(id = mascota_id)
+    if request.method == "POST":
+        evento_form = evento_personal_form(request.POST)
+        if evento_form.is_valid():
+            evento = evento_form.save(commit=False)
+            evento.mascota = mascota
+            evento.save()
+            return redirect('index')
+    else:
+        evento_form = evento_global_form()
+    return render(request,'agregar_evento_personal.html',{'evento_form':evento_form,'sitio_form':sitio_form})
 #end def
 
 def crear_conversacion_global(request):

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+﻿from datetime import datetime, timedelta
 from calendar import HTMLCalendar
 from django.db import models
 from django.core.validators import MaxValueValidator
@@ -6,6 +6,7 @@ from django.core.validators import MinValueValidator
 from apps.gestor_de_usuarios.models import Profile, Topico
 from django.utils import timezone
 
+from apps.gestor_de_mascotas.models import Mascota
 
 class Lugar(models.Model):
     TIPOS = (
@@ -44,7 +45,20 @@ class Evento_global(models.Model):
     fecha_hora_evento_inicio = models.DateTimeField(auto_now=False, auto_now_add=False, default = None)
     fecha_hora_evento_final = models.DateTimeField(auto_now=False, auto_now_add=False, default = None)
     lugar = models.ForeignKey(Lugar,on_delete=models.CASCADE,null=False)
-    
+
+    def __str__(self): #To string
+        return self.nombre_evento
+
+class Evento_personal(models.Model):
+    TIPOS = (
+        ('Vacunación', 'Vacunación'),
+        ('Desparasitación', 'Desparasitación'),
+        ('Baño', 'Baño'),
+        ('Consulta veterinaria', 'Consulta veterinaria')
+    )
+    mascota = models.ForeignKey(Mascota,on_delete=models.CASCADE,null=False)
+    tipo_evento = models.CharField(max_length = 256, blank = False, null = False, choices = TIPOS)
+    fecha_hora_evento = models.DateTimeField(auto_now=False, auto_now_add=False, default = None)
     def __str__(self): #To string
         return self.nombre_evento
 
