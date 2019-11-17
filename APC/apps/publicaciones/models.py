@@ -8,30 +8,6 @@ from django.utils import timezone
 
 from apps.gestor_de_mascotas.models import Mascota
 
-class Lugar(models.Model):
-    TIPOS = (
-        ('Clínicas veterinarias','Clínicas veterinarias'),
-        ('Consultorios veterinarios','Consultorios veterinarios'),
-        ('Refugios','Refugios'),
-        ('Centros de adopción','Centros de adopción'),
-        ('Fundaciones','Fundaciones'),
-        ('Guarderías','Guarderias'),
-        ('Sitio Pet Friendly','Sitio Pet Friendly'),
-        ('Tiendas para mascotas','Tiendas para mascotas'),
-        ('Spa para mascotas','Spa para mascotas'),
-    )
-    nombre_lugar = models.CharField(max_length = 256, blank = False, null = False)
-    tipo_lugar = models.CharField(max_length = 256, blank = False, null = False, choices = TIPOS)
-    telefono_cel = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1000000),MaxValueValidator(9999999999)])
-    email = models.EmailField(max_length = 256, blank = False, null = False)
-    direccion = models.CharField(max_length = 256, blank = False, null = False)
-    longitud = models.FloatField(null=True, blank=True, default=None)#------
-    latitud = models.FloatField(null=True, blank=True, default=None)#------
-    def __str__(self): #To string
-        return self.nombre_lugar
-
-
-
 class Evento_global(models.Model):
     TIPOS = (
         ('Adopción', 'Adopción'),
@@ -42,9 +18,11 @@ class Evento_global(models.Model):
     usuario = models.ForeignKey(Profile,on_delete=models.CASCADE,null=False)
     nombre_evento = models.CharField(max_length = 256, blank = False, null = False)
     tipo_evento = models.CharField(max_length = 256, blank = False, null = False, choices = TIPOS)
-    fecha_hora_evento_inicio = models.DateTimeField(auto_now=False, auto_now_add=False, default = None)
-    fecha_hora_evento_final = models.DateTimeField(auto_now=False, auto_now_add=False, default = None)
-    lugar = models.ForeignKey(Lugar,on_delete=models.CASCADE,null=False)
+    fecha_hora_evento_inicio = models.DateTimeField(auto_now=False, auto_now_add=False)
+    fecha_hora_evento_final = models.DateTimeField(auto_now=False, auto_now_add=False)
+    direccion = models.CharField(max_length = 40, blank = False, null = False, default = None)
+    longitud = models.FloatField(null=True, blank=True, default=None)
+    latitud = models.FloatField(null=True, blank=True, default=None)
 
     def __str__(self): #To string
         return self.nombre_evento

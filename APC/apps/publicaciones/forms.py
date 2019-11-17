@@ -1,33 +1,6 @@
 ﻿from django import forms
 from apps.gestor_de_mascotas.forms import DateInput
-from .models import Evento_global, Lugar, Conversacion_global, Mensaje, Evento_personal
-class lugar_form(forms.ModelForm):
- 	class Meta:
- 		model=Lugar
- 		fields=[
- 		'nombre_lugar',
-        'tipo_lugar',
-        'telefono_cel',
-        'email',
-        'direccion',
-        'longitud',#------
-        'latitud',#------
- 		 ]
-
- 		labels={
- 		'nombre_lugar':'Nombre del lugar',
-        'tipo_lugar':'Tipo del lugar',
-        'telefono_cel':'Telefono de celular del lugar',
-        'email':'Correo electrónico del lugar',
-        'direccion':'Dirección del lugar',
-        'longitud':'',#------
-        'latitud':'',#------
- 		}
- 		widgets = {
-            #'fecha_evento': DateInput(),
-            #'hora_evento': forms.CheckboxSelectMultiple(),
-        }
-#end class
+from .models import Evento_global, Conversacion_global, Mensaje, Evento_personal
 
 class evento_global_form(forms.ModelForm):
   class Meta:
@@ -37,13 +10,19 @@ class evento_global_form(forms.ModelForm):
         'nombre_evento',
         'tipo_evento',
         'fecha_hora_evento_inicio',
-        'fecha_hora_evento_final'
+        'fecha_hora_evento_final',
+        'direccion',
+        'longitud',
+        'latitud',
     ]
     labels = {
         'nombre_evento':'Nombre del evento',
         'tipo_evento':'Tipo del evento',
         'fecha_hora_evento_inicio':'Fecha y hora del inicio del evento',
         'fecha_hora_evento_final':'Fecha y hora del final del evento',
+        'Direccion':'Direccion del evento',
+        'longitud':'',
+        'latitud':'',
     }
     widgets = {
       'fecha_hora_evento_inicio': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
