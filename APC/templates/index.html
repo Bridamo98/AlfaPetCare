@@ -36,10 +36,18 @@
             <ul class="dropdown-menu">
               <li><a href="#">Eventos</a></li>
               <li><a href="#">Reportes</a></li>
-              <li><a href="#">Productos/Servicios</a></li>
+              <li><a href="#">Servicios</a></li>
               <li><a href="#">Todos</a></li>
             </ul>
           </li>
+
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Mascotas<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Mis mascotas</a></li>
+              <li><a href="{%url 'mascota:registrar_mascota'%}">Añadir mascota</a></li>
+            </ul>
+          </li>
+
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tópicos <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="{% url 'topicos' %}">Mis tópicos</a></li>
@@ -54,19 +62,18 @@
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Eventos <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Mis eventos</a></li>
-              <li><a href="{%url 'publicaciones:agregar_evento_global'%}">Eventos globales</a></li>
+              <li><a href="{%url 'publicaciones:agregar_evento_global'%}">Crear evento global</a></li>
             </ul>
           </li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Servicios <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="{% url 'agregar_servicio' %}">Añadir Servicio</a></li>
-              <li><a href="#">Calificar un Serficio</a></li>
+              <li><a href="#">Calificar un Servicio</a></li>
             </ul>
           </li>
 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Mapa <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Agregar lugar</a></li>
               <li><a href="{% url 'mapa' %}">Lugares cercanos</a></li>
               <li><a href="{% url 'calendar' %}">Calendario</a></li>
             </ul>
@@ -102,17 +109,7 @@
 
         </div>
 
-          <div class="panel panel-default">
-            <div class="panel-heading text-center">
-              <h4>Mis mascotas</h4>
-            </div>
-            <div class="panel-body">
-              <a href="{%url 'mascota:registrar_mascota'%}" class="text-center">Registrar mascota</a>
 
-
-
-            </div>
-          </div>
 
       </div>
 
