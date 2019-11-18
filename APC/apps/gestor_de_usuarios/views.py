@@ -13,14 +13,18 @@ from .forms import *
 
 from .models import Profile
 """
-Renderiza el template index o página de inicio
+Entradas: request, petición del usuario
+proceso: Renderiza la página de inicio
+Salidas: profile, información asociada al usuario
 """
 def Home(request):
     profile = Profile.objects.get(user = request.user)
     return render(request,'index.html',{'profile':profile,})#HTTP request
 #end def
 """
-Valida el login de un usuario
+Entradas: FormView, formulario de login
+proceso: Renderiza el formulario de login y valida el login
+Salidas: pantalla de inicio, en caso de que el login sea correcto
 """
 class Login(FormView):
     template_name = 'login.html'
@@ -43,16 +47,18 @@ class Login(FormView):
         return super(Login,self).form_valid(form)
 #end class
 """
-Efectua el logout de un usuario
+Entradas: request, petición del usuario
+proceso: efectua el logout del usuario
+Salidas: pantalla de login
 """
 def Logout(request):
     logout(request)
     return HttpResponseRedirect('/accounts/login')
 #end def
-
-
 """
-Valida y renderiza el registro de un usuario
+Entradas: request, petición del usuario
+proceso: valida y efectua el registro de un usuario
+Salidas: pantalla de login, en caso de ser correcto el registro
 """
 def Registro(request):
     if request.method == "POST":
@@ -70,7 +76,11 @@ def Registro(request):
         info_form=infoForm()
     return render(request,'registro.html',{'user_form':user_form,'info_form':info_form})
 #end def
-
+"""
+Entradas: request, petición del usuario
+proceso: valida y efectua el cambio en la information de un usuario
+Salidas: pantalla de inicio, en caso de ser correcto la modificación
+"""
 def Editar_perfil(request):
     profile = Profile.objects.get(user = request.user)
     if request.method == "POST":
@@ -87,7 +97,11 @@ def Editar_perfil(request):
         edit_info_form = editar_informacion_form(instance = profile)
         #edit_password_form = PasswordChangeForm(user = request.user)
     return render(request,'editar_perfil.html',{'edit_user_form':edit_user_form,'edit_info_form':edit_info_form,'profile':profile,})#HTTP request
-
+"""
+Entradas: request, petición del usuario
+proceso: valida y efectua el cambio de contraseña de un usuario
+Salidas: pantalla de editar perfil, en caso de ser correcto el cambio
+"""
 def Cambiar_password(request):
     profile = Profile.objects.get(user = request.user)
     if request.method == "POST":
@@ -101,26 +115,36 @@ def Cambiar_password(request):
     else:
         edit_password_form = PasswordChangeForm(user = request.user)
     return render(request,'cambiar_password.html',{'edit_password_form':edit_password_form,'profile':profile,})#HTTP request
-
-
-
+"""
+Entradas: request, petición del usuario
+proceso: renderiza la pantalla de topicos del usuario
+Salidas: pantalla de topicos
+"""
 def Topicos(request):
     profile = Profile.objects.get(user = request.user)
     return render(request,'topicos.html',{'profile':profile,})#HTTP request
 #end def
-
+"""
+Entradas: request, petición del usuario
+proceso: valida y efectua el agregar topicos de un usuario
+Salidas: pantalla de topicos del usuario, en caso de ser correcta la agregación
+"""
 def Agregar_topicos(request):
     profile = Profile.objects.get(user = request.user)
     if request.method == "POST":
         a_topicos_form = agregar_topicos_form(request.POST, instance = profile)
         if a_topicos_form.is_valid():
             a_topicos_form.save()
-            return redirect('index')
+            return redirect('topicos')
     else:
         a_topicos_form = agregar_topicos_form()
     return render(request,'agregar_topicos.html',{'agregar_topicos_form':agregar_topicos_form,'profile':profile,})#HTTP request
 #end def
-
+"""
+Entradas: request, petición del usuario
+proceso: valida y efectua el agregar servicios de un usuario
+Salidas: pantalla de inicio, en caso de ser correcta la agregación
+"""
 def Agregar_servicio(request):
     profile = Profile.objects.get(user = request.user)
     if request.method == "POST":

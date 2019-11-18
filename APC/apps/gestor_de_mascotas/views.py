@@ -5,7 +5,9 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 """
-Valida y renderiza el registro de una mascota
+Entradas: request, petición del usuario
+proceso: valida y efectua el registro de una mascota
+Salidas: pantalla de inicio, en caso de ser correcta la agregación
 """
 def registro_mascota(request):
     profile = Profile.objects.get(user = request.user)
@@ -21,7 +23,11 @@ def registro_mascota(request):
         mascota_form = registro_mascota_form()
     return render(request,'registro_mascota.html',{'mascota_form':mascota_form,'profile':profile})
 #end def
-
+"""
+Entradas: request, petición del usuario
+proceso: renderiza el listado de las mascotas
+Salidas: pantalla de lista de mascotas
+"""
 def mis_mascotas(request):
     profile = Profile.objects.get(user = request.user)
     mascotas = profile.mascota_set.all()

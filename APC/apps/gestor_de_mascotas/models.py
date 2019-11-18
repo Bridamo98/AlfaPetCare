@@ -5,10 +5,20 @@ from apps.gestor_de_usuarios.models import Profile
 from django.core.exceptions import ValidationError
 from datetime import date
 
+
+"""
+Entradas: value, fecha
+proceso: valida si una fecha es posterior a la de hoy, en tal caso lanza una excepción
+Salidas: excepción
+"""
 def validate_current_century(value):
     if value >= date.today():
         raise ValidationError(u'%s es una fecha inválida!' % value)
-
+"""
+Representa una enfermedad, correspondiente a una enfermedad de perros
+Atributos:
+-nombre: nombre de la enfermedad
+"""
 class Enfermedad(models.Model):
     nombre = models.CharField(max_length = 30, blank = False, null = False)
     def __str__(self): #To string
@@ -18,7 +28,11 @@ class Enfermedad(models.Model):
         verbose_name = 'Enfermedad'
         verbose_name_plural = 'Enfermedades'
         ordering = ['nombre']
-
+"""
+Representa una enfermedad, correspondiente a una enfermedad de gatos
+Atributos:
+-nombre: nombre de la enfermedad
+"""
 class Enfermedad2(models.Model):
     nombre = models.CharField(max_length = 30, blank = False, null = False)
     def __str__(self): #To string
@@ -28,7 +42,24 @@ class Enfermedad2(models.Model):
         verbose_name = 'Enfermedad2'
         verbose_name_plural = 'Enfermedades2'
         ordering = ['nombre']
-
+"""
+Representa una mascota, que corresponde a un usuarios
+Atributos:
+-usuario = usuario dueño de la mascota
+-nombre = nombre de la mascota
+-tipo = tipo de la mascota
+-fecha_nacimiento = fecha de naciemiento de la mascota
+-sexo = sexo de la mascota
+-raza = raza de la mascota
+-color = color de la mascota
+-peso = peso de la mascota
+-tamanio = tamaño de la mascota
+-enfermedades = conjunto de enfermedades de la mascota para perros
+-enfermedades_gato = conjunto de enfermedades de la mascota para gatos
+-esterilizado = indica si la mascota está esterilizada o no
+-estado = estado actual de la mascota
+-foto = foto de la mascota
+"""
 class Mascota(models.Model):
     TIPOS = (
         ('Perro', 'Perro'),

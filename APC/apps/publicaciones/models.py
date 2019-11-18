@@ -7,7 +7,18 @@ from apps.gestor_de_usuarios.models import Profile, Topico
 from django.utils import timezone
 
 from apps.gestor_de_mascotas.models import Mascota
-
+"""
+Representa un evento global dentro del sistema
+Atributos:
+-usuario = usuario al que pertenece el evento global
+-nombre_evento = nombre del evento global
+-tipo_evento = tipo de evento global
+-fecha_hora_evento_inicio = fecha y hora de inicio del evento global
+-fecha_hora_evento_final = fecha y hora de finalización del evento global
+-direccion = dirección del evento global
+-longitud = longitud de la posición
+-latitud = latitud de la posición
+"""
 class Evento_global(models.Model):
     TIPOS = (
         ('Adopción', 'Adopción'),
@@ -26,7 +37,14 @@ class Evento_global(models.Model):
 
     def __str__(self): #To string
         return self.nombre_evento
-
+"""
+Representa un evento personal dentro del sistema
+Atributos:
+-usuario = usuario al que pertenece el evento global
+-mascota = mascota a la que pertence el evento
+-tipo_evento = tipo de evento personal
+-fecha_hora_evento = fecha y hora de inicio del evento personal
+"""
 class Evento_personal(models.Model):
     TIPOS = (
         ('Vacunación', 'Vacunación'),
@@ -40,7 +58,13 @@ class Evento_personal(models.Model):
     fecha_hora_evento = models.DateTimeField(auto_now=False, auto_now_add=False, default = None)
     def __str__(self): #To string
          return self.tipo_evento
-
+"""
+Representa una conversacion global dentro del sistema
+Atributos:
+-usuario = usuario al que pertence la conversacion
+-titulo = titulo de la conversacion
+-topico = topico al que está relacionado la conversación
+"""
 class Conversacion_global(models.Model):
     usuario = models.ForeignKey(Profile,on_delete=models.CASCADE,null=False)
     titulo = models.CharField(max_length = 100, blank = False, null = False)
@@ -48,7 +72,14 @@ class Conversacion_global(models.Model):
 
     def __str__(self): #To string
         return self.titulo
-
+"""
+Representa un mensaje dentro del sistema
+Atributos:
+-usuario = usuario al que pertence el mensaje
+-contenido = contenido del mensaje
+-fecha = fecha de creación del mensaje
+-conversacion = conversación a la que pertenece el mensaje
+"""
 class Mensaje(models.Model):
     usuario = models.ForeignKey(Profile,on_delete=models.CASCADE,null=False)
     contenido = models.TextField(blank = False, null = False)
@@ -57,7 +88,9 @@ class Mensaje(models.Model):
 
     def __str__(self): #To string
         return self.contenido
-
+"""
+Representa el calendario de los eventos globales(hereda de HTMLCalendar)
+"""
 class Calendar(HTMLCalendar):
 	def __init__(self, year=None, month=None, locale='fr_FR'):
 		self.year = year
@@ -92,7 +125,9 @@ class Calendar(HTMLCalendar):
 		for week in self.monthdays2calendar(self.year, self.month):
 			cal += f'{self.formatweek(week, events)}\n'
 		return cal
-
+"""
+Representa el calendario de los eventos personales (hereda de HTMLCalendar)
+"""
 class Calendar2(HTMLCalendar):
 	def __init__(self, year=None, month=None, locale='fr_FR'):
 		self.year = year

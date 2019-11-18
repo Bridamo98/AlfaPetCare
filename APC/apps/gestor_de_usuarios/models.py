@@ -4,12 +4,23 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
-
+"""
+Representa un topico dentro del sistema
+Atributos:
+-nombre: nombre de topico
+"""
 class Topico(models.Model):
     nombre = models.CharField(max_length = 30, blank = False, null = False)
     def __str__(self): #To string
         return self.nombre
-
+"""
+Representa un perfil dentro del sistema
+Atributos:
+-user = usuario asociado al perfil
+-tfno = telefono del perfil
+-topicos = conjunto de topicos asociados al perfil
+-foto = foto del perfil
+"""
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     tfno = models.PositiveIntegerField(blank=True, null=True, validators=[MinValueValidator(1000000),MaxValueValidator(9999999999)])
@@ -18,7 +29,17 @@ class Profile(models.Model):
     #profile_img=models.ImageField(upload_to='images/profile/',default='images/profile/perfilb.jpg',null=False,blank=False)
     def __str__(self): #To string
         return self.user.username
-
+"""
+Representa un servicio dentro del sistema
+Atributos:
+-usuario = usuario asociado al servicio
+-tipo = tipo del servicio
+-direccion = dirección del lugar de atención donde se presta el servicio
+-longitud = longitud de la posición
+-latitud = latitud de la posición
+-calificacion = calificación del servicio
+-cantidad_calif = cantidad de calificaciones realizadas
+"""
 class Servicio(models.Model):
     TIPOS = (
         ('Guardería', 'Guardería'),
