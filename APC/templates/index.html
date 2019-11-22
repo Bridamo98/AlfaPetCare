@@ -14,6 +14,24 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
   <link href="{% static 'css/estilos.css'%}" rel="stylesheet">
   {% block encabezado %}
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    .map-container {
+      overflow: hidden;
+      padding-bottom: 56.25%;
+      position: relative;
+      height: 0;
+    }
+
+    .map-container iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+  </style>
   {% endblock encabezado %}
   <title>{% block titulo %}Inicio{% endblock titulo %}</title>
 </head>
@@ -34,10 +52,9 @@
         <ul class="nav navbar-nav">
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Noticias <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Eventos</a></li>
+              <li><a href="{% url 'index' %}">Eventos</a></li>
               <li><a href="#">Reportes</a></li>
-              <li><a href="#">Servicios</a></li>
-              <li><a href="#">Todos</a></li>
+              <li><a href="{% url 'publicaciones:servicios' %}">Servicios</a></li>
             </ul>
           </li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Mascotas<span class="caret"></span></a>
@@ -55,7 +72,6 @@
           </li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Eventos <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Mis eventos</a></li>
               <li><a href="{%url 'publicaciones:agregar_evento_global'%}">Crear evento global</a></li>
               <li><a href="{% url 'calendar' %}">Calendario global</a></li>
             </ul>
@@ -70,7 +86,6 @@
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Mapa <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="{% url 'mapa' %}">Lugares cercanos</a></li>
-              <li><a href="{% url 'calendar' %}">Calendario</a></li>
             </ul>
           </li>
 
@@ -123,13 +138,77 @@
             <h4>Eventos</h4>
           </div>
           <div class="panel-body">
+            {% for evento in eventos %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4>{{evento.nombre_evento}}</h4>
+              </div>
+              <div class="panel-body">
+
+                <table style="width:100%" >
+                  <tr>
+                    <td>
+                      <table style="width:100%" class="table table-striped">
+                        <tr>
+                          <td><b>Nombre del evento:</b> {{evento.nombre_evento}}</td>
+                          <td id="longitud">{{evento.longitud}}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Tipo del evento:</b> {{evento.tipo_evento}}</td>
+                          <td id="latitud">{{evento.latitud}}</td>
+
+                        </tr>
+                        <tr>
+                          <td><b>Fecha y hora de inicio:</b> {{evento.fecha_hora_evento_inicio}}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Fecha y hora de finalización:</b> {{evento.fecha_hora_evento_final}}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Dirección:</b> {{evento.direccion}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+              <script type="text/javascript">
+                function initialize() {
+                  document.getElementById('longitud').style.display = 'none';
+                  document.getElementById('latitud').style.display = 'none';
+                  var mapOptions, searchBox,
+                    element = document.getElementById('map-canvas');
+
+                  var myLat = parseFloat(document.getElementById('longitud').innerText.replace(/,/g, '.')),
+                    myLong = parseFloat(document.getElementById('latitud').innerText.replace(/,/g, '.'));
+                    console.log(myLong);
+
+                  mapOptions = {
+                    zoom: 15,
+                    center: new google.maps.LatLng(myLat, myLong), //---- PONER BOGOTÁ
+                    disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
+                    scrollWheel: true, // If set to false disables the scrolling on the map.
+                    draggable: true, // If set to false , you cannot move the map around.
+                  };
+                  map = new google.maps.Map(element, mapOptions); // Till this like of code it loads up the map.
+                  marker = new google.maps.Marker({
+                    position: mapOptions.center,
+                    map: map,
+                  });
+                }
+              </script>
+              <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHWD7FWauZoIEpRqhy2-KbZ3NS5XcsGdc&libraries=places&callback=initialize"></script>
+              <div id="map-canvas" class="z-depth-1-half map-container mb-5" style="height: 400px"></div>
+
+            </div>
+
+
+            {% endfor %}
           </div>
         </div>
         {% endblock cuerpo %}
       </div>
-
-
-
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo " crossorigin="anonymous "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js " integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49 " crossorigin="anonymous "></script>

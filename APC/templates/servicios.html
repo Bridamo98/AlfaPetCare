@@ -1,0 +1,77 @@
+{% extends 'index.html'%}
+{% load crispy_forms_tags %}
+{% block encabezado%}
+{% endblock encabezado%}
+
+{% block titulo %}Mis Mascotas{% endblock titulo %}
+{% block cuerpo %}
+<link rel="stylesheet" href="/css/estilos.css">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Servicios</h4>
+  </div>
+  <div class="panel-body">
+    {% for servicio in servicios %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>{{servicio.tipo}}</h4>
+      </div>
+      <div class="panel-body">
+        <table style="width:100%">
+          <tr>
+            <td>
+              <table style="width:100%">
+                <tr>
+                  <td><b>Tipo:</b> {{servicio.tipo}}</td>
+                  <td id="longitud">{{servicio.longitud}}</td>
+                </tr>
+                <tr>
+                  <td><b>Direccion:</b> {{servicio.direccion}}</td>
+                  <td id="latitud">{{servicio.latitud}}</td>
+                </tr>
+                <tr>
+                  <td><b>Proveedor del servicio:</b> {{servicio.usuario.user.first_name}} {{servicio.usuario.user.last_name}}</td>
+                </tr>
+                <tr>
+                  <td><b>Correo electrónico:</b> {{servicio.usuario.user.email}}</td>
+                </tr>
+                <tr>
+                  <td><b>Teléfono:</b> {{servicio.usuario.tfno}}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript">
+        function initialize() {
+          document.getElementById('longitud').style.display = 'none';
+          document.getElementById('latitud').style.display = 'none';
+          var mapOptions, searchBox,
+            element = document.getElementById('map-canvas');
+
+          var myLat = parseFloat(document.getElementById('longitud').innerText.replace(/,/g, '.')),
+            myLong = parseFloat(document.getElementById('latitud').innerText.replace(/,/g, '.'));
+            console.log(myLong);
+
+          mapOptions = {
+            zoom: 15,
+            center: new google.maps.LatLng(myLat, myLong), //---- PONER BOGOTÁ
+            disableDefaultUI: false, // Disables the controls like zoom control on the map if set to true
+            scrollWheel: true, // If set to false disables the scrolling on the map.
+            draggable: true, // If set to false , you cannot move the map around.
+          };
+          map = new google.maps.Map(element, mapOptions); // Till this like of code it loads up the map.
+          marker = new google.maps.Marker({
+            position: mapOptions.center,
+            map: map,
+          });
+        }
+      </script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHWD7FWauZoIEpRqhy2-KbZ3NS5XcsGdc&libraries=places&callback=initialize"></script>
+      <div id="map-canvas" class="z-depth-1-half map-container mb-5" style="height: 400px"></div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock cuerpo %}

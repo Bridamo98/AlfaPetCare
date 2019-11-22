@@ -102,7 +102,7 @@ class Calendar(HTMLCalendar):
 		events_per_day = events.filter(fecha_hora_evento_inicio__day=day)
 		d = ''
 		for event in events_per_day:
-			d += f'<li> {event.nombre_evento} </li>'
+			d += f'<li>{event.nombre_evento}</li>'
 
 		if day != 0:
 			return f"<td><span class='date'>{day}</span><ul style = 'height: 100%;padding: 0px 5px 0px 20px;'> {d} </ul></td>"
@@ -119,7 +119,7 @@ class Calendar(HTMLCalendar):
 	# filter events by year and month
 	def formatmonth(self, withyear=True):
 		events = Evento_global.objects.filter(fecha_hora_evento_inicio__year=self.year, fecha_hora_evento_inicio__month=self.month)
-		cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
+		cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar" class="table table-striped">\n'
 		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
 		cal += f'{self.formatweekheader()}\n'
 		for week in self.monthdays2calendar(self.year, self.month):
@@ -139,7 +139,7 @@ class Calendar2(HTMLCalendar):
 		events_per_day = events.filter(fecha_hora_evento__day=day)
 		d = ''
 		for event in events_per_day:
-			d += f'<li> {event.tipo_evento} </li>'
+			d += f'<li> {event.tipo_evento} de {event.mascota.nombre}</li>'
 
 		if day != 0:
 			return f"<td><span class='date'>{day}</span><ul style = 'height: 100%;padding: 0px 5px 0px 20px;'> {d} </ul></td>"

@@ -25,7 +25,7 @@ SECRET_KEY = 'b!l(yg7mjou@bred8v%fn=j4rkzk$*et7pys1i6g%+1%@!w+6='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['alfapetcare.pythonanywhere.com','localhost']
+ALLOWED_HOSTS = ['alfapetcare.pythonanywhere.com','localhost','testserver']
 
 
 # Application definition

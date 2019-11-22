@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
+from apps.publicaciones.models import Evento_global
 from .forms import *
 
 from .models import Profile
@@ -18,8 +19,12 @@ proceso: Renderiza la página de inicio
 Salidas: profile, información asociada al usuario
 """
 def Home(request):
+    if(request.user.is_staff):
+        return HttpResponseRedirect('/admin/')
+    
     profile = Profile.objects.get(user = request.user)
-    return render(request,'index.html',{'profile':profile,})#HTTP request
+    eventos = Evento_global.objects.all()
+    return render(request,'index.html',{'profile':profile,'eventos':eventos})#HTTP request
 #end def
 """
 Entradas: FormView, formulario de login

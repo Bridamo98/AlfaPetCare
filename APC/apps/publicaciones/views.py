@@ -8,7 +8,7 @@ from django.views import generic
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 
-from apps.gestor_de_usuarios.models import Profile
+from apps.gestor_de_usuarios.models import *
 from .models import *
 from .filters import Conversacion_filter
 """
@@ -27,7 +27,7 @@ def agregar_evento_global(request):
             return redirect('index')
     else:
         evento_form = evento_global_form()
-    return render(request,'agregar_evento_global.html',{'evento_form':evento_form})
+    return render(request,'agregar_evento_global.html',{'evento_form':evento_form,'profile':profile,})
 #end def
 """
 Entradas: request, petición del usuario
@@ -47,7 +47,7 @@ def agregar_evento_personal(request, mascota_id):
             return redirect('index')
     else:
         evento_form = evento_personal_form()
-    return render(request,'agregar_evento_personal.html',{'evento_form':evento_form})
+    return render(request,'agregar_evento_personal.html',{'evento_form':evento_form,'profile':profile,})
 #end def
 """
 Entradas: request, petición del usuario
@@ -110,15 +110,16 @@ atributos:
 class CalendarView(generic.ListView):
     model = Evento_global
     template_name = 'calendario_global.html'
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         d = get_date(self.request.GET.get('month', None))
+        profile = Profile.objects.get(user = self.request.user)
         cal = Calendar(d.year, d.month)
         html_cal = cal.formatmonth(withyear=True)
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
+        context['profile'] = profile
         return context
 
 def get_date(req_day):
@@ -160,7 +161,9 @@ class Conversaciones_ListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        profile = Profile.objects.get(user = self.request.user)
         context['filter'] = Conversacion_filter(self.request.GET, queryset = self.get_queryset())
+        context['profile'] = profile
         return context
 """
 Representa el calendario que contiene los eventos conversaciones personales
@@ -180,4 +183,10 @@ class Calendario_personal(generic.ListView):
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
+        context['profile'] = profile
         return context
+def servicios(request):
+    profile = Profile.objects.get(user = request.user)
+    servicios = Servicio.objects.all()
+    return render(request,'servicios.html',{'profile':profile,'servicios':servicios})#HTTP request
+#end def

@@ -18,7 +18,7 @@
     <ul>
       {% for conversacion in filter.qs%}
       <li>
-        <a href="#">{{ conversacion.titulo }}</a>
+        <a  href="{%url 'publicaciones:ver_conversacion' conversacion_id=conversacion.id%}" class="text-center">{{ conversacion.titulo }}</a>
       </li>
       {% endfor %}
     </ul>
